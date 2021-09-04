@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'data_ui.ui'
+# Form implementation generated from reading ui file 'UI/data_ui.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -9,101 +9,107 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+import resources.logo_rc
 
 
-class Ui_Form(object):
-    def setupUi(self, Form):
-        Form.setObjectName("Form")
-        Form.resize(1125, 859)
+class Ui_data_window(object):
+    def setupUi(self, data_window):
+        data_window.setObjectName("data_window")
+        data_window.resize(1104, 859)
         font = QtGui.QFont()
         font.setFamily("Romantic")
         font.setPointSize(14)
         font.setBold(True)
         font.setWeight(75)
-        Form.setFont(font)
-        self.gridLayoutWidget_2 = QtWidgets.QWidget(Form)
-        self.gridLayoutWidget_2.setGeometry(QtCore.QRect(10, 0, 241, 221))
-        self.gridLayoutWidget_2.setObjectName("gridLayoutWidget_2")
-        self.gridLayout_2 = QtWidgets.QGridLayout(self.gridLayoutWidget_2)
-        self.gridLayout_2.setContentsMargins(0, 0, 0, 0)
-        self.gridLayout_2.setObjectName("gridLayout_2")
-        self.label_6 = QtWidgets.QLabel(self.gridLayoutWidget_2)
-        self.label_6.setStyleSheet("image: url(:/images/logo_01.png);")
-        self.label_6.setText("")
-        self.label_6.setObjectName("label_6")
-        self.gridLayout_2.addWidget(self.label_6, 1, 0, 1, 1)
-        self.gridLayoutWidget = QtWidgets.QWidget(Form)
-        self.gridLayoutWidget.setGeometry(QtCore.QRect(130, 390, 491, 231))
+        data_window.setFont(font)
+        self.gridLayoutWidget = QtWidgets.QWidget(data_window)
+        self.gridLayoutWidget.setGeometry(QtCore.QRect(130, 470, 491, 231))
         self.gridLayoutWidget.setObjectName("gridLayoutWidget")
-        self.gridLayout = QtWidgets.QGridLayout(self.gridLayoutWidget)
-        self.gridLayout.setContentsMargins(0, 0, 0, 0)
-        self.gridLayout.setObjectName("gridLayout")
-        self.lineEdit_3 = QtWidgets.QLineEdit(self.gridLayoutWidget)
-        self.lineEdit_3.setObjectName("lineEdit_3")
-        self.gridLayout.addWidget(self.lineEdit_3, 3, 2, 1, 1)
-        self.lineEdit_5 = QtWidgets.QLineEdit(self.gridLayoutWidget)
-        self.lineEdit_5.setObjectName("lineEdit_5")
-        self.gridLayout.addWidget(self.lineEdit_5, 5, 2, 1, 1)
-        self.label = QtWidgets.QLabel(self.gridLayoutWidget)
-        self.label.setObjectName("label")
-        self.gridLayout.addWidget(self.label, 2, 0, 1, 1)
-        self.label_4 = QtWidgets.QLabel(self.gridLayoutWidget)
-        self.label_4.setObjectName("label_4")
-        self.gridLayout.addWidget(self.label_4, 5, 0, 1, 1)
-        self.label_2 = QtWidgets.QLabel(self.gridLayoutWidget)
-        self.label_2.setObjectName("label_2")
-        self.gridLayout.addWidget(self.label_2, 3, 0, 1, 1)
-        self.lineEdit_2 = QtWidgets.QLineEdit(self.gridLayoutWidget)
-        self.lineEdit_2.setObjectName("lineEdit_2")
-        self.gridLayout.addWidget(self.lineEdit_2, 2, 2, 1, 1)
-        self.lineEdit_4 = QtWidgets.QLineEdit(self.gridLayoutWidget)
-        self.lineEdit_4.setObjectName("lineEdit_4")
-        self.gridLayout.addWidget(self.lineEdit_4, 4, 2, 1, 1)
-        self.label_3 = QtWidgets.QLabel(self.gridLayoutWidget)
-        self.label_3.setObjectName("label_3")
-        self.gridLayout.addWidget(self.label_3, 4, 0, 1, 1)
-        self.lineEdit = QtWidgets.QLineEdit(self.gridLayoutWidget)
-        self.lineEdit.setObjectName("lineEdit")
-        self.gridLayout.addWidget(self.lineEdit, 1, 2, 1, 1)
-        self.label_5 = QtWidgets.QLabel(self.gridLayoutWidget)
-        self.label_5.setObjectName("label_5")
-        self.gridLayout.addWidget(self.label_5, 1, 0, 1, 1)
-        self.pushButton = QtWidgets.QPushButton(Form)
-        self.pushButton.setGeometry(QtCore.QRect(720, 470, 251, 71))
-        self.pushButton.setObjectName("pushButton")
-        self.label_7 = QtWidgets.QLabel(Form)
-        self.label_7.setGeometry(QtCore.QRect(190, -10, 1131, 241))
-        self.label_7.setStyleSheet("image: url(:/images/slide1.jpg);")
-        self.label_7.setLineWidth(1)
-        self.label_7.setText("")
-        self.label_7.setObjectName("label_7")
+        self.form_data = QtWidgets.QGridLayout(self.gridLayoutWidget)
+        self.form_data.setContentsMargins(0, 0, 0, 0)
+        self.form_data.setObjectName("form_data")
+        self.password = QtWidgets.QLabel(self.gridLayoutWidget)
+        self.password.setObjectName("password")
+        self.form_data.addWidget(self.password, 3, 0, 1, 1)
+        self.password_input = QtWidgets.QLineEdit(self.gridLayoutWidget)
+        self.password_input.setObjectName("password_input")
+        self.form_data.addWidget(self.password_input, 3, 2, 1, 1)
+        self.email = QtWidgets.QLabel(self.gridLayoutWidget)
+        self.email.setObjectName("email")
+        self.form_data.addWidget(self.email, 0, 0, 1, 1)
+        self.email_input = QtWidgets.QLineEdit(self.gridLayoutWidget)
+        self.email_input.setObjectName("email_input")
+        self.form_data.addWidget(self.email_input, 0, 2, 1, 1)
+        self.name = QtWidgets.QLabel(self.gridLayoutWidget)
+        self.name.setObjectName("name")
+        self.form_data.addWidget(self.name, 4, 0, 1, 1)
+        self.asu_id_input = QtWidgets.QLineEdit(self.gridLayoutWidget)
+        self.asu_id_input.setObjectName("asu_id_input")
+        self.form_data.addWidget(self.asu_id_input, 1, 2, 1, 1)
+        self.uel_id = QtWidgets.QLabel(self.gridLayoutWidget)
+        self.uel_id.setObjectName("uel_id")
+        self.form_data.addWidget(self.uel_id, 2, 0, 1, 1)
+        self.asu_id = QtWidgets.QLabel(self.gridLayoutWidget)
+        self.asu_id.setObjectName("asu_id")
+        self.form_data.addWidget(self.asu_id, 1, 0, 1, 1)
+        self.name_input = QtWidgets.QLineEdit(self.gridLayoutWidget)
+        self.name_input.setObjectName("name_input")
+        self.form_data.addWidget(self.name_input, 4, 2, 1, 1)
+        self.uel_id_input = QtWidgets.QLineEdit(self.gridLayoutWidget)
+        self.uel_id_input.setObjectName("uel_id_input")
+        self.form_data.addWidget(self.uel_id_input, 2, 2, 1, 1)
+        self.get_portfolio = QtWidgets.QPushButton(data_window)
+        self.get_portfolio.setGeometry(QtCore.QRect(760, 550, 251, 71))
+        self.get_portfolio.setObjectName("get_portfolio")
+        self.get_portfolio.clicked.connect(self.get_portfolio_data)
+        self.frame = QtWidgets.QFrame(data_window)
+        self.frame.setGeometry(QtCore.QRect(0, 0, 1121, 321))
+        self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame.setObjectName("frame")
+        self.banner_data = QtWidgets.QLabel(self.frame)
+        self.banner_data.setGeometry(QtCore.QRect(-30, -60, 1211, 411))
+        self.banner_data.setStyleSheet("image: url(:/images/slide1.jpg);")
+        self.banner_data.setLineWidth(1)
+        self.banner_data.setText("")
+        self.banner_data.setObjectName("banner_data")
+        self.retranslateUi(data_window)
+        QtCore.QMetaObject.connectSlotsByName(data_window)
 
-        self.retranslateUi(Form)
-        QtCore.QMetaObject.connectSlotsByName(Form)
-
-    def retranslateUi(self, Form):
+    def retranslateUi(self, data_window):
         _translate = QtCore.QCoreApplication.translate
-        Form.setWindowTitle(_translate("Form", "Form"))
-        self.label.setText(_translate("Form", "Name: "))
-        self.label_4.setText(_translate("Form", "Email: "))
-        self.label_2.setText(_translate("Form", "ID Number: "))
-        self.label_3.setText(_translate("Form", "UEL ID: "))
-        self.label_5.setText(_translate("Form", "Password: "))
-        self.pushButton.setText(_translate("Form", "Get Portfolio"))
+        data_window.setWindowTitle(_translate("data_window", "Form"))
+        self.password.setText(_translate("data_window", "Password: "))
+        self.email.setText(_translate("data_window", "Email:"))
+        self.name.setText(_translate("data_window", "Name:"))
+        self.uel_id.setText(_translate("data_window", "UEL ID:"))
+        self.asu_id.setText(_translate("data_window", "ASU ID:"))
+        self.get_portfolio.setText(_translate("data_window", "Get Portfolio"))
 
-import resources.logo_rc
+    def get_portfolio_data(self, e):
+        print("getting portfolio...")
+        name = self.name_input.text()
+        password = self.password_input.text()
+        email = self.email_input.text()
+        uel_id = self.uel_id_input.text()
+        asu_id = self.uel_id_input.text()
+        self.name_input.clear()
+        self.email_input.clear()
+        self.password_input.clear()
+        self.asu_id_input.clear()
+        self.uel_id_input.clear()
+
+
 
 
 if __name__ == "__main__":
     import sys
-    style = """
-        
-    
-    
-    """
     app = QtWidgets.QApplication(sys.argv)
-    Form = QtWidgets.QWidget(style)
-    ui = Ui_Form()
-    ui.setupUi(Form)
-    Form.show()
+    with open("resources/css/styles.css") as f:
+        styles = f.read()
+    app.setStyleSheet(styles)
+    data_window = QtWidgets.QWidget()
+    ui = Ui_data_window()
+    ui.setupUi(data_window)
+    data_window.show()
     sys.exit(app.exec_())

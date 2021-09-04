@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Form</class>
- <widget class="QWidget" name="Form">
+ <class>data_window</class>
+ <widget class="QWidget" name="data_window">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1125</width>
+    <width>1104</width>
     <height>859</height>
    </rect>
   </property>
@@ -21,125 +21,119 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QWidget" name="gridLayoutWidget_2">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>0</y>
-     <width>241</width>
-     <height>221</height>
-    </rect>
-   </property>
-   <layout class="QGridLayout" name="gridLayout_2">
-    <item row="1" column="0">
-     <widget class="QLabel" name="label_6">
-      <property name="styleSheet">
-       <string notr="true">image: url(:/images/logo_01.png);</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
   <widget class="QWidget" name="gridLayoutWidget">
    <property name="geometry">
     <rect>
      <x>130</x>
-     <y>390</y>
+     <y>470</y>
      <width>491</width>
      <height>231</height>
     </rect>
    </property>
-   <layout class="QGridLayout" name="gridLayout">
-    <item row="3" column="2">
-     <widget class="QLineEdit" name="lineEdit_3"/>
-    </item>
-    <item row="5" column="2">
-     <widget class="QLineEdit" name="lineEdit_5"/>
-    </item>
-    <item row="2" column="0">
-     <widget class="QLabel" name="label">
-      <property name="text">
-       <string>TextLabel</string>
-      </property>
-     </widget>
-    </item>
-    <item row="5" column="0">
-     <widget class="QLabel" name="label_4">
-      <property name="text">
-       <string>TextLabel</string>
-      </property>
-     </widget>
-    </item>
+   <layout class="QGridLayout" name="form_data">
     <item row="3" column="0">
-     <widget class="QLabel" name="label_2">
+     <widget class="QLabel" name="password">
       <property name="text">
-       <string>TextLabel</string>
+       <string>Password: </string>
       </property>
      </widget>
     </item>
-    <item row="2" column="2">
-     <widget class="QLineEdit" name="lineEdit_2"/>
+    <item row="3" column="2">
+     <widget class="QLineEdit" name="password_input"/>
     </item>
-    <item row="4" column="2">
-     <widget class="QLineEdit" name="lineEdit_4"/>
+    <item row="0" column="0">
+     <widget class="QLabel" name="email">
+      <property name="text">
+       <string>Email:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="2">
+     <widget class="QLineEdit" name="email_input"/>
     </item>
     <item row="4" column="0">
-     <widget class="QLabel" name="label_3">
+     <widget class="QLabel" name="name">
       <property name="text">
-       <string>TextLabel</string>
+       <string>Name:</string>
       </property>
      </widget>
     </item>
     <item row="1" column="2">
-     <widget class="QLineEdit" name="lineEdit"/>
+     <widget class="QLineEdit" name="asu_id_input"/>
     </item>
-    <item row="1" column="0">
-     <widget class="QLabel" name="label_5">
+    <item row="2" column="0">
+     <widget class="QLabel" name="uel_id">
       <property name="text">
-       <string>TextLabel</string>
+       <string>UEL ID:</string>
       </property>
      </widget>
     </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="asu_id">
+      <property name="text">
+       <string>ASU ID:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="2">
+     <widget class="QLineEdit" name="name_input"/>
+    </item>
+    <item row="2" column="2">
+     <widget class="QLineEdit" name="uel_id_input"/>
+    </item>
    </layout>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="get_portfolio">
    <property name="geometry">
     <rect>
-     <x>720</x>
-     <y>470</y>
+     <x>760</x>
+     <y>550</y>
      <width>251</width>
      <height>71</height>
     </rect>
    </property>
    <property name="text">
-    <string>PushButton</string>
+    <string>Get Porfolio</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_7">
+  <widget class="QFrame" name="frame">
    <property name="geometry">
     <rect>
-     <x>190</x>
-     <y>-10</y>
-     <width>1131</width>
-     <height>241</height>
+     <x>0</x>
+     <y>0</y>
+     <width>1121</width>
+     <height>321</height>
     </rect>
    </property>
-   <property name="styleSheet">
-    <string notr="true">image: url(:/images/slide1.jpg);</string>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
    </property>
-   <property name="lineWidth">
-    <number>1</number>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
    </property>
-   <property name="text">
-    <string/>
-   </property>
+   <widget class="QLabel" name="banner_data">
+    <property name="geometry">
+     <rect>
+      <x>-30</x>
+      <y>-60</y>
+      <width>1211</width>
+      <height>411</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">image: url(:/images/slide1.jpg);</string>
+    </property>
+    <property name="lineWidth">
+     <number>1</number>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources>
-  <include location="resources/logo.qrc"/>
+  <include location="../resources/qrc/logo.qrc"/>
  </resources>
  <connections/>
 </ui>
