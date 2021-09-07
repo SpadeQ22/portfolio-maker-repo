@@ -1,5 +1,7 @@
 from tkinter import *
-from UI.Screen1 import *
+from UI.Screen1 import Screen1
+from UI.Screen2 import Screen2
+
 
 class Window(Tk):
     def __init__(self, *args):
@@ -7,9 +9,18 @@ class Window(Tk):
         self.title("Potfolio Maker App")
         self.geometry("1440x1024")
         self.configure(bg="#83568a")
-        screen1 = Screen1(self)
-        screen1.pack(fill="both", expand=True)
+        self.currentScreen = None
+        self.change_to_screen(Screen1)
         self.mainloop()
+        
+    def change_to_screen(self, Screen):
+        screen = Screen(self)
+        screen.pack(fill="both", expand=True)
+        if self.currentScreen is not None:
+            self.currentScreen.forget()
+        self.currentScreen = screen
+
+
 
 
 win = Window()

@@ -1,9 +1,10 @@
 from tkinter import *
-
+from UI.Screen2 import Screen2
 
 class Screen1(Frame):
     def __init__(self, window):
         Frame.__init__(self, window)
+        self.win = window
         self.configure(bg="#83568a")
         self.canvas = Canvas(
             self,
@@ -15,12 +16,12 @@ class Screen1(Frame):
             relief="ridge")
         self.canvas.place(x=0, y=0)
 
-        self.background_img = PhotoImage(file=f"resources/images/background.png")
+        self.background_img = PhotoImage(file=f"resources/images/screen1/background.png")
         self.background = self.canvas.create_image(
             671.0, 381.0,
             image=self.background_img)
 
-        self.entry0_img = PhotoImage(file=f"resources/images/img_textBox0.png")
+        self.entry0_img = PhotoImage(file=f"resources/images/screen1/img_textBox0.png")
         self.entry0_bg = self.canvas.create_image(
             708.5, 318.0,
             image=self.entry0_img)
@@ -35,7 +36,7 @@ class Screen1(Frame):
             width=449.0,
             height=38)
 
-        self.entry1_img = PhotoImage(file=f"resources/images/img_textBox1.png")
+        self.entry1_img = PhotoImage(file=f"resources/images/screen1/img_textBox1.png")
         self.entry1_bg = self.canvas.create_image(
             708.5, 410.0,
             image=self.entry1_img)
@@ -50,7 +51,7 @@ class Screen1(Frame):
             width=449.0,
             height=38)
 
-        self.entry2_img = PhotoImage(file=f"resources/images/img_textBox2.png")
+        self.entry2_img = PhotoImage(file=f"resources/images/screen1/img_textBox2.png")
         self.entry2_bg = self.canvas.create_image (
             708.5, 511.0,
             image=self.entry2_img)
@@ -65,7 +66,7 @@ class Screen1(Frame):
             width=449.0,
             height=38)
 
-        self.entry3_img = PhotoImage(file=f"resources/images/img_textBox3.png")
+        self.entry3_img = PhotoImage(file=f"resources/images/screen1/img_textBox3.png")
         self.entry3_bg = self.canvas.create_image(
             708.5, 600.0,
             image=self.entry3_img)
@@ -80,7 +81,7 @@ class Screen1(Frame):
             width=449.0,
             height=38)
 
-        self.entry4_img = PhotoImage(file=f"resources/images/img_textBox4.png")
+        self.entry4_img = PhotoImage(file=f"resources/images/screen1/img_textBox4.png")
         self.entry4_bg = self.canvas.create_image (
             708.5, 694.0,
             image=self.entry4_img)
@@ -95,15 +96,15 @@ class Screen1(Frame):
             width=449.0,
             height=38)
 
-        self.img0 = PhotoImage(file=f"resources/images/img0.png")
-        self.img1 = PhotoImage(file=f"resources/images/img1.png")
+        self.img0 = PhotoImage(file=f"resources/images/screen1/img0.png")
+        self.img1 = PhotoImage(file=f"resources/images/screen1/img1.png")
         self.b0 = Label(
             image=self.img0,
             borderwidth=0,
             highlightthickness=0,
             relief=FLAT)
 
-        self.b0.bind("<Button-1>", lambda e: self.btn_clicked ())
+        self.b0.bind("<Button-1>", lambda e: self.btn_clicked())
 
         self.b0.place(
             x=586, y=796,
@@ -112,10 +113,8 @@ class Screen1(Frame):
 
         self.changeOnHover(self.b0, self.img1, self.img0)
 
-
-
     def btn_clicked(self):
-        print ("Button Clicked")
+        self.win.change_to_screen(Screen=Screen2)
 
     def changeOnHover(self, button, colorOnHover, colorOnLeave):
         button.bind ("<Enter>", func=lambda e: button.config (
