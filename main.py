@@ -1,3 +1,6 @@
-from Autofill.filler import infoToReplace
+from Autofill.filler import Filler
 
-infoToReplace('test template.docx', "Hussein", "CESS", 2021, 123, 321, 1, 2, "asu name", "uel name", "semester 1")
+fill = Filler()
+
+fill.infoToReplace('Header Template.docx', "Hussein", "CESS", 2021, 123, 321
+                   , 1, 2, "asu name", "uel name", "semester 1")

@@ -1,5 +1,5 @@
 import datetime
-
+from docxtpl import DocxTemplate
 import docx
 
 
@@ -12,30 +12,27 @@ class Filler:
                       UEL_module_code,
                       ASU_course_name, UEL_module_name, semester):
 
-        doc = docx.Document(template_name)
+        doc = DocxTemplate(template_name)
+        context = {'name': name
+                   ''}
+        doc.render(context)
+        doc.save("generated_doc.docx")
 
-        for table in doc.tables:
-            for row in table.rows:
-                for cell in row.cells:
-                    for paragraph in cell.paragraphs:
-                        paragraph.text = paragraph.text.replace("<name>", name)
-                        paragraph.text = paragraph.text.replace("<program_name>", program_name)
-                        paragraph.text = paragraph.text.replace("<academic_year>", str(academic_year))
-                        paragraph.text = paragraph.text.replace("<ID>", str(ID))
-                        paragraph.text = paragraph.text.replace("<UEL_ID>", str(UEL_ID))
-                        paragraph.text = paragraph.text.replace("<ASU_course_code>", str(ASU_course_code))
-                        paragraph.text = paragraph.text.replace("<UEL_module_code>", str(UEL_module_code))
-                        paragraph.text = paragraph.text.replace("<ASU_course_name>", ASU_course_name)
-                        paragraph.text = paragraph.text.replace("<UEL_module_name>", UEL_module_name)
-                        paragraph.text = paragraph.text.replace("<semester>", str(semester))
-                        if template_name == 'Header Template.docx':
-                            paragraph.text = paragraph.text.replace("<date_here>",
-                                                                    datetime.datetime.now().strftime('%m/%d/%Y'))
-                        else:
+       # for table in doc.tables:
+           # for row in table.rows:
+             #   for cell in row.cells:
+              #      for paragraph in cell.paragraphs:
+               #         paragraph.text = paragraph.text.replace("<name>", name)
+                #        paragraph.text = paragraph.text.replace("<program_name>", program_name)
+                 #       paragraph.text = paragraph.text.replace("<academic_year>", str(academic_year))
+                  ###    paragraph.text = paragraph.text.replace("<ASU_course_code>", str(ASU_course_code))
+                     #   paragraph.text = paragraph.text.replace("<UEL_module_code>", str(UEL_module_code))
+                      #  paragraph.text = paragraph.text.replace("<ASU_course_name>", ASU_course_name)
+                       # paragraph.text = paragraph.text.replace("<UEL_module_name>", UEL_module_name)
+                        ####                                         datetime.datetime.now().strftime('%m/%d/%Y'))
+                        #else:
+                           # break
                             # paragraph.text = paragraph.text.replace("<date_here>", ***get date from lms***
-                            return 0
-
-        doc.save(template_name)
 
     def gradesToReplace(self, template_name, grade, total, instructor_signature, assistant_signature):
         doc = docx.Document(template_name)
