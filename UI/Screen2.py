@@ -1,9 +1,11 @@
+import os
 from tkinter import *
 
 
 class Screen2(Frame):
     def __init__(self, win):
         Frame.__init__(self, win)
+        self.win = win
         self.configure(bg="#83568a")
         self.canvas = Canvas(
             self,
@@ -340,6 +342,38 @@ class Screen2(Frame):
             653.0, 492.0,
             image=self.background_img)
 
+        self.img4 = PhotoImage (file=f"resources/images/screen1/img4.png")
+        self.img4_hover = PhotoImage (file=f"resources/images/screen1/img4_hover.png")
+        self.b4 = Label (
+            image=self.img4,
+            borderwidth=0,
+            highlightthickness=0,
+            relief="flat")
+        self.b4.place (
+            x=1393, y=0,
+            width=48,
+            height=37)
+
+        self.img6 = PhotoImage (file=f"resources/images/screen1/img6.png")
+        self.img6_hover = PhotoImage (file=f"resources/images/screen1/img6_hover.png")
+        self.b6 = Label (
+            image=self.img6,
+            borderwidth=0,
+            highlightthickness=0,
+            relief="flat")
+        self.b6.place (
+            x=1346, y=0,
+            width=48,
+            height=37)
+
+        self.changeOnHover (self.b4, self.img4_hover, self.img4)
+        self.changeOnHover (self.b6, self.img6_hover, self.img6)
+
+        self.b4.bind("<Button-1>", lambda e: self.close())
+        self.b6.bind("<Button-1>", lambda e: self.minimize())
+
+        self.bind("<Map>", self.frame_mapped)
+
 
 
     def btn_clicked_done(self):
@@ -353,3 +387,16 @@ class Screen2(Frame):
             image=colorOnHover))
         button.bind ("<Leave>", func=lambda e: button.config(
             image=colorOnLeave))
+
+    def close(self):
+        os._exit (0)
+
+    def frame_mapped(self, e):
+        self.win.update_idletasks ()
+        self.win.overrideredirect (True)
+        self.win.state('normal')
+
+    def minimize(self):
+        self.win.update_idletasks ()
+        self.win.overrideredirect (False)
+        self.win.state ('iconic')
