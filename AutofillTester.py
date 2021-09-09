@@ -1,4 +1,4 @@
-from Autofill.InfoToReplace import Subject, Midterm, Project, Quiz, Lab, Assignment, Student
+from InfoContainers import Subject, Midterm, Project, Quiz, Lab, Assignment, Student
 from Autofill.filler import createSubjectSliceFiller
 
 student1 = Student("Hussein", 'placeholder.png', 2021, 123, "CESS", 2021)
