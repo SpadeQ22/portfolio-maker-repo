@@ -52,7 +52,7 @@ class Screen2(Frame):
             536.0, 474.0,
             image=self.entry2_img)
 
-        self.entry2 = Entry (
+        self.entry2 = Entry(
             bd=0,
             bg="#dfdfdf",
             highlightthickness=0)
