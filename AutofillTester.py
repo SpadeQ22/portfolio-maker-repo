@@ -14,7 +14,6 @@ ass1 = Assignment(grade=5, total=10, num=1)
 ass2 = Assignment(grade=8, total=10, num=2)
 quiz1 = Quiz(grade=10, total=10, num=1)
 quiz2 = Quiz(grade=7, total=10, num=2)
-header = Header()
 
 slicesList = [ass1, ass2, quiz1, quiz2, lab1, lab2, midterm, project]
 

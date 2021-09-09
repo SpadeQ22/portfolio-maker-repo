@@ -154,6 +154,13 @@ def createSubjectSliceFiller(student, subject, subjectSlice):
 
 
 def createSubjectFiller(student, subject, slicesList):
+    """
+
+    :param student: takes student object
+    :param subject: takes subject object
+    :param slicesList: takes subject slice
+    :return: returns all student documents and saves them in AutofillResults file
+    """
     header = Header()
     print("Please wait for a few seconds...")
     slicesList.append(header)
