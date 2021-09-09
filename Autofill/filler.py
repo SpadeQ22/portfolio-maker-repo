@@ -91,9 +91,9 @@ class Filler:
                    self.marker2: "*"}
 
         doc.render(context)
-        new_name = kwargs["template_name"].replace("Template.docx", "")
-        new_name = new_name.replace("Autofill/Templates and pictures/", "")
-        doc.save("Autofill/AutofillResults/My " + new_name + str(kwargs["no"]) + ".docx")
+        doc.save("Autofill/AutofillResults/My " +
+                 (kwargs["template_name"].replace("Template.docx", "")).replace("Autofill/Templates and pictures/", "")
+                 + str(kwargs["no"]) + ".docx")
 
 
 def createSubjectSliceFiller(student, subject, subjectSlice):
