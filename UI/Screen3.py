@@ -86,11 +86,6 @@ class Screen3(Frame):
     def btn_clicked(self):
         print("Button Clicked")
 
-    def changeOnHover(self, button, colorOnHover, colorOnLeave):
-        button.bind ("<Enter>", func=lambda e: button.config(
-            image=colorOnHover))
-        button.bind ("<Leave>", func=lambda e: button.config(
-            image=colorOnLeave))
 
     def changeOnHover(self, button, colorOnHover, colorOnLeave):
         button.bind ("<Enter>", func=lambda e: button.config(

@@ -3,6 +3,7 @@ from tkinter import *
 from UI.Screen1 import Screen1
 from UI.Screen2 import Screen2
 from UI.Screen3 import Screen3
+from UI.Screen4 import Screen4
 
 
 class Application (Tk):
@@ -13,7 +14,7 @@ class Application (Tk):
         self.geometry("1440x1024")
         self.configure(bg="#83568a")
         self.currentScreen = None
-        self.change_to_screen(Screen1)
+        self.change_to_screen(Screen4)
         self.overrideredirect(True)
         super().bind("<Button-1>", self.clickwin)
         super().bind("<B1-Motion>", self.dragwin)
