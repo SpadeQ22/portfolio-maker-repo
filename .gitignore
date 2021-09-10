@@ -10,6 +10,7 @@ __pycache__/
 .Python
 build/
 develop-eggs/
+poppler-0.68.0/
 dist/
 downloads/
 eggs/

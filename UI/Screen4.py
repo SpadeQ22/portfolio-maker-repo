@@ -2,7 +2,7 @@ import os
 from tkinter import *
 from tkinter import ttk, filedialog
 from PIL import ImageTk, Image
-
+from pdf2image import convert_from_path
 
 class Card:
 
@@ -68,7 +68,7 @@ class Screen4(Frame):
             width=56,
             height=42)
 
-        self.b1.bind ("<Button-1>", lambda e: self.animate ())
+        self.b1.bind ("<Button-1>", lambda e: self.animate())
 
         self.img2 = PhotoImage (file=f"resources/images/screen4/img2.png")
         self.img2_hover = PhotoImage (file=f"resources/images/screen4/img2_hover.png")
@@ -83,9 +83,9 @@ class Screen4(Frame):
             width=238,
             height=86)
 
-        self.img3 = PhotoImage (file=f"resources/images/screen4/img3.png")
-        self.img3_hover = PhotoImage (file=f"resources/images/screen4/img3_hover.png")
-        self.b3 = Button (
+        self.img3 = PhotoImage(file=f"resources/images/screen4/img3.png")
+        self.img3_hover = PhotoImage(file=f"resources/images/screen4/img3_hover.png")
+        self.b3 = Button(
             image=self.img3,
             borderwidth=0,
             highlightthickness=0,
@@ -96,9 +96,9 @@ class Screen4(Frame):
             width=238,
             height=86)
 
-        self.img4 = PhotoImage (file=f"resources/images/screen4/img4.png")
-        self.img4_hover = PhotoImage (file=f"resources/images/screen4/img4_hover.png")
-        self.b4 = Button (
+        self.img4 = PhotoImage(file=f"resources/images/screen4/img4.png")
+        self.img4_hover = PhotoImage(file=f"resources/images/screen4/img4_hover.png")
+        self.b4 = Button(
             image=self.img4,
             borderwidth=0,
             highlightthickness=0,
@@ -272,6 +272,7 @@ class Screen4(Frame):
 
         self.b14.bind("<Button-1>", lambda e: self.close())
         self.b16.bind("<Button-1>", lambda e: self.minimize())
+        self.b16.bind("<Alt-Tab>", lambda e: self.minimize())
         self.bind("<Map>", self.frame_mapped)
 
 
@@ -315,7 +316,8 @@ class Screen4(Frame):
     def file_dialogue(self, frame):
         name = filedialog.askopenfilename()
         if name != "":
-            img = Image.open(name)
+            pages = convert_from_path(name, poppler_path="D:/Programming/Python Development/portfolio-maker-repo/resources/poppler-0.68.0/bin", first_page=1, last_page=1)
+            img = pages[0]
             img = img.resize((175, 248), Image.ANTIALIAS)
             photoImg = ImageTk.PhotoImage(img)
             self.images.append(photoImg)
@@ -331,7 +333,9 @@ class Screen4(Frame):
                       highlightthickness=0,
                       compound='top',
                       text=f"{file_name}",
-                      fg="blue")
+                      fg="blue",
+                      wraplength=170,
+                      justify=CENTER)
         label.grid(column=self.col % 4, row=self.row, padx=35, pady=20)
         self.col += 1
         if self.col % 4 == 0:
@@ -342,7 +346,7 @@ class Screen4(Frame):
 
     def select(self, button):
         button.unbind("<Leave>")
-        button.config(bg="black")
+        button.config(bg="#93B5C6")
 
     def unselect(self, button):
         button.config(bg="white")
@@ -360,7 +364,7 @@ class Screen4(Frame):
 
     def changeOnHover(self, card):
         card.label.bind("<Enter>", func=lambda e: card.label.configure(
-            bg="black"))
+            bg="#93B5C6"))
         card.label.bind("<Leave>", func=lambda e: card.label.configure(
             bg="white"))
         card.label.bind("<Button-1>", lambda e: self.clicked_file(card))

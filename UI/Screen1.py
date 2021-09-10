@@ -141,10 +141,10 @@ class Screen1(Frame):
 
         self.changeOnHover (self.b4, self.img4_hover, self.img4)
         self.changeOnHover (self.b6, self.img6_hover, self.img6)
-
         self.b4.bind("<Button-1>", lambda e: self.close())
         self.b6.bind("<Button-1>", lambda e: self.minimize())
-
+        self.win.focus_force()
+        self.win.bind("<Alt-KeyPress-Tab>", lambda e: self.minimize2())
         self.bind("<Map>", self.frame_mapped)
 
     def btn_clicked(self):
@@ -168,5 +168,12 @@ class Screen1(Frame):
         self.win.update_idletasks ()
         self.win.overrideredirect (False)
         self.win.state ('iconic')
+
+    def minimize2(self):
+        self.win.update_idletasks ()
+        self.win.overrideredirect (False)
+        self.win.state ('iconic')
+
+
 
 

@@ -6,10 +6,10 @@ from UI.Screen3 import Screen3
 from UI.Screen4 import Screen4
 
 
-class Application (Tk):
+class Application(Tk):
 
     def __init__(self, *args):
-        Tk.__init__ (self)
+        super().__init__ ()
         self.title("Potfolio Maker App")
         self.geometry("1440x1024")
         self.configure(bg="#83568a")
@@ -18,16 +18,13 @@ class Application (Tk):
         self.overrideredirect(True)
         super().bind("<Button-1>", self.clickwin)
         super().bind("<B1-Motion>", self.dragwin)
-
-
-
         self.resizable(False, False)
         self.mainloop()
 
     def dragwin(self, event):
-        x = super ().winfo_pointerx () - self._offsetx
-        y = super ().winfo_pointery () - self._offsety
-        super ().geometry (f"+{x}+{y}")
+        x = super().winfo_pointerx() - self._offsetx
+        y = super().winfo_pointery() - self._offsety
+        super().geometry(f"+{x}+{y}")
 
     def clickwin(self, event):
         self._offsetx = super ().winfo_pointerx () - super ().winfo_rootx ()
@@ -37,7 +34,7 @@ class Application (Tk):
         screen = Screen (self)
         screen.pack (fill="both", expand=True)
         if self.currentScreen is not None:
-            self.currentScreen.forget ()
+            self.currentScreen.forget()
         self.currentScreen = screen
 
     def changeOnHover(self, button, colorOnHover, colorOnLeave):
