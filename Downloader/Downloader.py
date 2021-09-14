@@ -92,10 +92,8 @@ class Downloader:
                 continue
 
     def save_file(self, filepath, content, n):
-        filename = "../Subjects/" + filepath
+        filename = "Subjects/" + filepath
         os.makedirs(os.path.dirname(filename), exist_ok=True)
         with open(filename, "wb") as f:
             f.write(content)
 
-dw = Downloader("19p8102@eng.asu.edu.eg", "Omar2211")
-dw.get_files(["CSE111"])
