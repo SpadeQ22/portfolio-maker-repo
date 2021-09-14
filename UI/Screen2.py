@@ -2,6 +2,7 @@ import os
 from tkinter import *
 
 
+
 class Screen2(Frame):
     def __init__(self, win):
         Frame.__init__(self, win)

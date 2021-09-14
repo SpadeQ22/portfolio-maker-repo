@@ -4,8 +4,8 @@ import tkinter.font as tkFont
 
 
 class Screen3(Frame):
-
     def __init__(self, window):
+
         Frame.__init__(self, window)
         self.win = window
         window.configure(bg="#83568a")
@@ -84,6 +84,7 @@ class Screen3(Frame):
         self.bind("<Map>", self.frame_mapped)
 
     def btn_clicked(self):
+
         print("Button Clicked")
 
 
