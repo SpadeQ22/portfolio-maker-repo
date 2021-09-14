@@ -28,12 +28,16 @@ class Downloader:
 
                 self.dict_pay = '[{"index":0,"methodname":"core_course_get_enrolled_courses_by_timeline_classification",' \
                            '"args":{"offset":0,"limit":96,"classification":"all","sort":"fullname"}}]'
-                self.r = self.session.get("https://lms.eng.asu.edu.eg/lib/ajax/service.php",
+                self.re = self.session.get("https://lms.eng.asu.edu.eg/lib/ajax/service.php",
                                 data=self.dict_pay, params=self.Param)
 
-                self.data = self.r.json()
+                self.data = self.re.json()
                 self.subjects = {subject['fullname'].split()[0]: subject['viewurl'] for subject in self.data[0]['data']['courses']}
                 break
+            except ConnectionAbortedError:
+                continue
+            except ConnectionRefusedError:
+                continue
             except ConnectionError:
                 continue
 
@@ -51,10 +55,12 @@ class Downloader:
         self.session = s
         self.session_key = session_key
 
-    def get_files(self, subjects):
+    def get_files(self, subject):
         while True:
             try:
-                for key, val in subjects.items():
+                for key, val in self.subjects.items():
+                    if key not in subject:
+                        continue
                     re = self.session.get(val)
                     res = BeautifulSoup(re.content, 'html.parser')
                     re = res.select('.activity.assign.modtype_assign a')
@@ -77,13 +83,20 @@ class Downloader:
                             re = self.session.get(link[0].get("href"), allow_redirects=True)
                             self.save_file(path, re.content, num)
                 break
+
+            except ConnectionAbortedError:
+                continue
+            except ConnectionRefusedError:
+                continue
             except ConnectionError:
                 continue
+
 
     def save_file(self, filepath, content, n):
         filename = "../Subjects/" + filepath
         os.makedirs(os.path.dirname(filename), exist_ok=True)
         with open(filename, "wb") as f:
             f.write(content)
+
 
 
