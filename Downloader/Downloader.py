@@ -36,6 +36,7 @@ class Downloader:
             except Exception:
                 continue
 
+
     def auth_moodle(self, data: dict) -> requests.Session():
         login, password, url_domain = data.values()
         s = requests.Session()
@@ -50,7 +51,7 @@ class Downloader:
         self.session = s
         self.session_key = session_key
 
-    def get_assignments(self, subjects):
+    def get_files(self, subjects):
         while True:
             try:
                 for key, val in subjects.items():
@@ -77,11 +78,10 @@ class Downloader:
             ext = self.ex[exten]
         except KeyError:
             ext = ".doc"
-        filename = "./" + filepath + f"/ass{n}{ext}"
+        filename = "../Subjects/" + filepath + f"/ass{n}{ext}"
         os.makedirs(os.path.dirname(filename), exist_ok=True)
         with open(filename, "wb") as f:
             f.write(content)
-
 
 
 
