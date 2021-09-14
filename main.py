@@ -8,6 +8,5 @@ token-id: 235469-c5009876-28a2-45de-a0d8-107fab26a6c7
 image-size for preview = 175 w x 248 h
 """
 
-downloader = dw.Downloader("19p8102@eng.asu.edu.eg", "omar2211")
-
-downloader.get_files(["CSE111"])
+dw = dw.Downloader("19p8102@eng.asu.edu.eg", "Omar2211")
+dw.get_files(["CSE111"])

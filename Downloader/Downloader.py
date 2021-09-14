@@ -64,9 +64,9 @@ class Downloader:
                     re = self.session.get(val)
                     res = BeautifulSoup(re.content, 'html.parser')
                     re = res.select('.activity.assign.modtype_assign a')
-                    assign_links = [atag.get("href") for atag in re]
+                    assign_links = {atag.getText():atag.get("href") for atag in re}
                     num = 0
-                    for ass in assign_links:
+                    for key1, ass in assign_links.items():
                         num += 1
                         re = self.session.get(ass)
                         res = BeautifulSoup(re.content, 'html.parser')
@@ -74,11 +74,11 @@ class Downloader:
                         if bool(link):
                             path = None
                             name = link[0].getText()
-                            if "LAB" in name.upper():
+                            if "LAB" in key1.upper():
                                 path = key + "/lab/" + name
-                            elif "PROJECT" in name.upper():
+                            elif "PROJECT" in key1.upper():
                                 path = key + "/project/" + name
-                            else:
+                            elif "ASS" in key1.upper():
                                 path = key + "/ass/" + name
                             re = self.session.get(link[0].get("href"), allow_redirects=True)
                             self.save_file(path, re.content, num)
@@ -91,12 +91,11 @@ class Downloader:
             except ConnectionError:
                 continue
 
-
     def save_file(self, filepath, content, n):
         filename = "../Subjects/" + filepath
         os.makedirs(os.path.dirname(filename), exist_ok=True)
         with open(filename, "wb") as f:
             f.write(content)
 
-
-
+dw = Downloader("19p8102@eng.asu.edu.eg", "Omar2211")
+dw.get_files(["CSE111"])
