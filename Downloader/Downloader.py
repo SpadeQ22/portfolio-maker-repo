@@ -15,6 +15,7 @@ class Downloader:
             "password": password,
             "url": "https://lms.eng.asu.edu.eg/login/index.php"
         }
+
         self.extension = mimetypes.types_map
         self.ex = {val: key for key, val in self.extension.items()}
         self.session = None
@@ -33,9 +34,8 @@ class Downloader:
                 self.data = self.r.json()
                 self.subjects = {subject['fullname'].split()[0]: subject['viewurl'] for subject in self.data[0]['data']['courses']}
                 break
-            except Exception:
+            except ConnectionError:
                 continue
-
 
     def auth_moodle(self, data: dict) -> requests.Session():
         login, password, url_domain = data.values()
@@ -66,24 +66,24 @@ class Downloader:
                         res = BeautifulSoup(re.content, 'html.parser')
                         link = res.select(".submissionstatustable .fileuploadsubmission a")
                         if bool(link):
+                            path = None
+                            name = link[0].getText()
+                            if "LAB" in name.upper():
+                                path = key + "/lab/" + name
+                            elif "PROJECT" in name.upper():
+                                path = key + "/project/" + name
+                            else:
+                                path = key + "/ass/" + name
                             re = self.session.get(link[0].get("href"), allow_redirects=True)
-                            self.save_file(key, re.content, num)
+                            self.save_file(path, re.content, num)
                 break
-            except Exception:
+            except ConnectionError:
                 continue
 
     def save_file(self, filepath, content, n):
-        exten = magic.from_buffer(content, mime=True)
-        try:
-            ext = self.ex[exten]
-        except KeyError:
-            ext = ".doc"
-        filename = "../Subjects/" + filepath + f"/ass{n}{ext}"
+        filename = "../Subjects/" + filepath
         os.makedirs(os.path.dirname(filename), exist_ok=True)
         with open(filename, "wb") as f:
             f.write(content)
-
-
-
 
 
