@@ -9,4 +9,5 @@ image-size for preview = 175 w x 248 h
 """
 
 dw = dw.Downloader("email", "pass")
-dw.get_files(["CSE111"])
+dw.get_files(["CSE112", "CSE111"])
+dw.get_quizzes(["CSE112", "CSE111"])

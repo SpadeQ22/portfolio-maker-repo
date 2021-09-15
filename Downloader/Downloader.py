@@ -1,10 +1,8 @@
 import mimetypes
-
 import requests
 import re
 from bs4 import BeautifulSoup
-import magic
-import os
+import os, pdfkit
 
 
 class Downloader:
@@ -55,19 +53,16 @@ class Downloader:
         self.session = s
         self.session_key = session_key
 
-    def get_files(self, subject):
+    def get_files(self, subjects):
         while True:
             try:
-                for key, val in self.subjects.items():
-                    if key not in subject:
-                        continue
-                    re = self.session.get(val)
+                for subject_code in subjects:
+                    sub_link = self.subjects[subject_code]
+                    re = self.session.get(sub_link)
                     res = BeautifulSoup(re.content, 'html.parser')
                     re = res.select('.activity.assign.modtype_assign a')
                     assign_links = {atag.getText():atag.get("href") for atag in re}
-                    num = 0
                     for key1, ass in assign_links.items():
-                        num += 1
                         re = self.session.get(ass)
                         res = BeautifulSoup(re.content, 'html.parser')
                         link = res.select(".submissionstatustable .fileuploadsubmission a")
@@ -75,13 +70,13 @@ class Downloader:
                             path = None
                             name = link[0].getText()
                             if "LAB" in key1.upper():
-                                path = key + "/lab/" + name
+                                path = subject_code + "/lab/" + name
                             elif "PROJECT" in key1.upper():
-                                path = key + "/project/" + name
+                                path = subject_code + "/project/" + name
                             elif "ASS" in key1.upper():
-                                path = key + "/ass/" + name
+                                path = subject_code + "/ass/" + name
                             re = self.session.get(link[0].get("href"), allow_redirects=True)
-                            self.save_file(path, re.content, num)
+                            self.save_file(path, re.content)
                 break
 
             except ConnectionAbortedError:
@@ -91,9 +86,46 @@ class Downloader:
             except ConnectionError:
                 continue
 
-    def save_file(self, filepath, content, n):
+    def save_file(self, filepath, content):
         filename = "Subjects/" + filepath
         os.makedirs(os.path.dirname(filename), exist_ok=True)
         with open(filename, "wb") as f:
             f.write(content)
+
+    def get_quizzes(self, subjects):
+        while True:
+            try:
+                for subject_code in subjects:
+                    sub_link = self.subjects[subject_code]
+                    re = self.session.get(sub_link)
+                    res = BeautifulSoup(re.content, 'html.parser')
+                    re = res.select('.activity.quiz.modtype_quiz a')
+                    quiz_links = {atag.getText(): atag.get("href") for atag in re}
+                    for key ,quiz in quiz_links.items():
+                        re = self.session.get(quiz)
+                        res = BeautifulSoup(re.content, 'html.parser')
+                        body = res.select(".quizattemptsummary a")
+                        if bool(body):
+                            cookies = self.session.cookies.items()
+                            option = {
+                                'cookie': cookies,
+                                'no-outline': None,
+                                'page-size': 'A4',
+                                'print-media-type': None,
+                                'quiet': None
+                            }
+                            os.makedirs(os.path.dirname(f"Subjects/{subject_code}/quizzes/{key}.pdf"), exist_ok=True)
+                            config = pdfkit.configuration(wkhtmltopdf="resources/wkhtmltopdf/bin/wkhtmltopdf.exe")
+                            pdfkit.from_url(body[0].get("href"), f"Subjects/{subject_code}/quizzes/{key}.pdf",
+                                            configuration=config, options=option)
+                break
+            except ConnectionAbortedError:
+                continue
+            except ConnectionRefusedError:
+                continue
+            except ConnectionError:
+                continue
+
+
+
 

@@ -43,7 +43,4 @@ class Application(Tk):
         button.bind ("<Leave>", func=lambda e: button.config (
             image=colorOnLeave))
 
-
-
-
 app = Application()
