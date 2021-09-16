@@ -1,6 +1,8 @@
 import os
 from tkinter import *
 import tkinter.font as tkFont
+from UI.Screen2 import Screen2
+from UI.Screen4 import Screen4
 
 
 class Screen3(Frame):
@@ -9,7 +11,7 @@ class Screen3(Frame):
         Frame.__init__(self, window)
         self.win = window
         window.configure(bg="#83568a")
-        self.customFont = tkFont.Font(family="Roboto Condensed", size=14, weight="normal")
+        self.customFont = tkFont.Font(family="RobotoCondensed-normal", size=14, weight="normal")
         self.current_row = 379
         self.current_column = 168
         self.first_row = 379
@@ -32,8 +34,8 @@ class Screen3(Frame):
             234.0, 141.5,
             image=self.background_img)
 
-        for _ in range(0, 6):
-            self.add_subject("Math")
+        for subject in self.win.subjects:
+            self.add_subject(subject)
 
         self.img3 = PhotoImage(file=f"resources/images/screen3/img3.png")
         self.img3_hover = PhotoImage(file=f"resources/images/screen3/img3_hover.png")
@@ -51,50 +53,21 @@ class Screen3(Frame):
         self.b3.bind("<Button-1>", lambda e: self.btn_clicked())
         self.changeOnHover(self.b3, self.img3_hover, self.img3)
 
-        self.img4 = PhotoImage (file=f"resources/images/screen1/img4.png")
-        self.img4_hover = PhotoImage (file=f"resources/images/screen1/img4_hover.png")
-        self.b4 = Label (
-            image=self.img4,
-            borderwidth=0,
-            highlightthickness=0,
-            relief="flat")
-        self.b4.place (
-            x=1393, y=0,
-            width=48,
-            height=37)
-
-        self.img6 = PhotoImage (file=f"resources/images/screen1/img6.png")
-        self.img6_hover = PhotoImage (file=f"resources/images/screen1/img6_hover.png")
-        self.b6 = Label (
-            image=self.img6,
-            borderwidth=0,
-            highlightthickness=0,
-            relief="flat")
-        self.b6.place (
-            x=1346, y=0,
-            width=48,
-            height=37)
-
-        self.changeOnHover (self.b4, self.img4_hover, self.img4)
-        self.changeOnHover (self.b6, self.img6_hover, self.img6)
-
-        self.b4.bind("<Button-1>", lambda e: self.close())
-        self.b6.bind("<Button-1>", lambda e: self.minimize())
-
-        self.bind("<Map>", self.frame_mapped)
-
     def btn_clicked(self):
+        self.win.download_splash()
+        self.win.change_to_screen(Screen4)
 
-        print("Button Clicked")
-
+    def return_to_edit(self, subject):
+        self.win.current_subject = subject
+        self.win.change_to_screen(Screen2)
 
     def changeOnHover(self, button, colorOnHover, colorOnLeave):
-        button.bind ("<Enter>", func=lambda e: button.config(
+        button.bind("<Enter>", func=lambda e: button.config(
             image=colorOnHover, fg="#B258B4"))
-        button.bind ("<Leave>", func=lambda e: button.config (
+        button.bind("<Leave>", func=lambda e: button.config(
             image=colorOnLeave, fg="#ffffff"))
 
-    def add_subject(self, name):
+    def add_subject(self, subject):
 
         img0 = PhotoImage(file=f"resources/images/screen3/img0.png")
         img0_hover = PhotoImage(file=f"resources/images/screen3/img0_hover.png")
@@ -103,7 +76,7 @@ class Screen3(Frame):
             borderwidth=0,
             highlightthickness=0,
             relief="flat",
-            text=f"{name}",
+            text=f"{subject.ASU_course_code}",
             compound="center",
             font=self.customFont,
             fg="#ffffff")
@@ -120,18 +93,49 @@ class Screen3(Frame):
             self.current_column += self.col_step
 
         self.changeOnHover(b0, img0_hover, img0)
-        b0.bind("<Button-1>", lambda e: self.btn_clicked())
+        b0.bind("<Button-1>", lambda e: self.return_to_edit(subject))
 
+    # def close(self):
+    #     os._exit (0)
+    #
+    # def frame_mapped(self, e):
+    #     self.win.update_idletasks ()
+    #     self.win.overrideredirect (True)
+    #     self.win.state('normal')
+    #
+    # def minimize(self):
+    #     self.win.update_idletasks ()
+    #     self.win.overrideredirect (False)
+    #     self.win.state ('iconic')
 
-    def close(self):
-        os._exit (0)
-
-    def frame_mapped(self, e):
-        self.win.update_idletasks ()
-        self.win.overrideredirect (True)
-        self.win.state('normal')
-
-    def minimize(self):
-        self.win.update_idletasks ()
-        self.win.overrideredirect (False)
-        self.win.state ('iconic')
+    # self.img4 = PhotoImage (file=f"resources/images/screen1/img4.png")
+    # self.img4_hover = PhotoImage (file=f"resources/images/screen1/img4_hover.png")
+    # self.b4 = Label (
+    #     image=self.img4,
+    #     borderwidth=0,
+    #     highlightthickness=0,
+    #     relief="flat")
+    # self.b4.place (
+    #     x=1393, y=0,
+    #     width=48,
+    #     height=37)
+    #
+    # self.img6 = PhotoImage (file=f"resources/images/screen1/img6.png")
+    # self.img6_hover = PhotoImage (file=f"resources/images/screen1/img6_hover.png")
+    # self.b6 = Label (
+    #     image=self.img6,
+    #     borderwidth=0,
+    #     highlightthickness=0,
+    #     relief="flat")
+    # self.b6.place (
+    #     x=1346, y=0,
+    #     width=48,
+    #     height=37)
+    #
+    # self.changeOnHover (self.b4, self.img4_hover, self.img4)
+    # self.changeOnHover (self.b6, self.img6_hover, self.img6)
+    #
+    # self.b4.bind("<Button-1>", lambda e: self.close())
+    # self.b6.bind("<Button-1>", lambda e: self.minimize())
+    #
+    # self.bind("<Map>", self.frame_mapped)
