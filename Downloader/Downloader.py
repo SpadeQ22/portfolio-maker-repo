@@ -101,7 +101,7 @@ class Downloader:
                     res = BeautifulSoup(re.content, 'html.parser')
                     re = res.select('.activity.quiz.modtype_quiz a')
                     quiz_links = {atag.getText(): atag.get("href") for atag in re}
-                    for key ,quiz in quiz_links.items():
+                    for key, quiz in quiz_links.items():
                         re = self.session.get(quiz)
                         res = BeautifulSoup(re.content, 'html.parser')
                         body = res.select(".quizattemptsummary a")
