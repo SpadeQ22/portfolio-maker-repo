@@ -1,6 +1,9 @@
 import os
+import tkinter.messagebox
 from tkinter import *
 from UI.Screen2 import Screen2
+import InfoContainers as IC
+from tkinter import filedialog
 
 class Screen1(Frame):
 
@@ -20,88 +23,110 @@ class Screen1(Frame):
 
         self.background_img = PhotoImage(file=f"resources/images/screen1/background.png")
         self.background = self.canvas.create_image(
-            671.0, 381.0,
+            557.5, 327.0,
             image=self.background_img)
 
         self.entry0_img = PhotoImage(file=f"resources/images/screen1/img_textBox0.png")
         self.entry0_bg = self.canvas.create_image(
-            708.5, 318.0,
+            445.5, 372.0,
             image=self.entry0_img)
 
         self.entry0 = Entry(
             bd=0,
             bg="#dfdfdf",
+            font=("Arial", 16, "normal"),
             highlightthickness=0)
 
         self.entry0.place(
-            x=484.0, y=298,
-            width=449.0,
-            height=38)
+            x=229.0, y=344,
+            width=433.0,
+            height=54)
 
         self.entry1_img = PhotoImage(file=f"resources/images/screen1/img_textBox1.png")
         self.entry1_bg = self.canvas.create_image(
-            708.5, 410.0,
+            445.5, 479.0,
             image=self.entry1_img)
 
         self.entry1 = Entry(
             bd=0,
             bg="#dfdfdf",
+            font=("Arial", 16, "normal"),
             highlightthickness=0)
 
         self.entry1.place(
-            x=484.0, y=390,
-            width=449.0,
-            height=38)
+            x=229.0, y=451,
+            width=433.0,
+            height=54)
 
         self.entry2_img = PhotoImage(file=f"resources/images/screen1/img_textBox2.png")
         self.entry2_bg = self.canvas.create_image (
-            708.5, 511.0,
+            445.5, 596.0,
             image=self.entry2_img)
 
         self.entry2 = Entry(
             bd=0,
             bg="#dfdfdf",
+            font=("Arial", 16, "normal"),
             highlightthickness=0)
 
         self.entry2.place(
-            x=484.0, y=491,
-            width=449.0,
-            height=38)
+            x=229.0, y=568,
+            width=433.0,
+            height=54)
 
         self.entry3_img = PhotoImage(file=f"resources/images/screen1/img_textBox3.png")
         self.entry3_bg = self.canvas.create_image(
-            708.5, 600.0,
+            986.5, 596.0,
             image=self.entry3_img)
 
         self.entry3 = Entry(
             bd=0,
             bg="#dfdfdf",
+            font=("Arial", 16, "normal"),
             highlightthickness=0)
 
         self.entry3.place(
-            x=484.0, y=580,
-            width=449.0,
-            height=38)
+            x = 770.0, y = 568,
+            width = 433.0,
+            height = 54)
 
         self.entry4_img = PhotoImage(file=f"resources/images/screen1/img_textBox4.png")
         self.entry4_bg = self.canvas.create_image (
-            708.5, 694.0,
+            986.5, 372.0,
             image=self.entry4_img)
 
         self.entry4 = Entry(
             bd=0,
             bg="#dfdfdf",
+            font=("Arial", 16, "normal"),
             highlightthickness=0)
 
         self.entry4.place(
-            x=484.0, y=674,
-            width=449.0,
-            height=38)
+            x = 770.0, y = 344,
+            width = 433.0,
+            height = 54)
+
+        self.entry5_img = PhotoImage(file=f"resources/images/screen1/img_textBox5.png")
+        self.entry5_bg = self.canvas.create_image(
+            986.5, 479.0,
+            image=self.entry5_img)
+
+        self.entry5 = Entry(
+            bd=0,
+            bg="#dfdfdf",
+            font=("Arial", 16, "normal"),
+            highlightthickness=0)
+
+        self.entry5.place(
+            x=770.0, y=451,
+            width=433.0,
+            height=54)
+
 
         self.img0 = PhotoImage(file=f"resources/images/screen1/img0.png")
-        self.img1 = PhotoImage(file=f"resources/images/screen1/img1.png")
+        self.img0_hover = PhotoImage(file=f"resources/images/screen1/img0_hover.png")
         self.b0 = Label(
-            image=self.img0,
+            image=self.img0_hover,
             borderwidth=0,
             highlightthickness=0,
             relief=FLAT)
@@ -109,46 +134,57 @@ class Screen1(Frame):
         self.b0.bind("<Button-1>", lambda e: self.btn_clicked())
 
         self.b0.place(
-            x=586, y=796,
+            x=589, y=811,
             width=233,
             height=87)
 
-        self.changeOnHover(self.b0, self.img1, self.img0)
+        self.changeOnHover(self.b0, self.img0, self.img0_hover)
 
-        self.img4 = PhotoImage (file=f"resources/images/screen1/img4.png")
-        self.img4_hover = PhotoImage (file=f"resources/images/screen1/img4_hover.png")
-        self.b4 = Label (
-            image=self.img4,
+        self.getportfolioimage_hover = PhotoImage(file=f"resources/images/screen1/getportfolioimage_hover.png")
+        self.getportfolioimage = PhotoImage(file=f"resources/images/screen1/getportfolioimage.png")
+        self.b1 = Label(
+            image=self.getportfolioimage,
             borderwidth=0,
             highlightthickness=0,
             relief="flat")
-        self.b4.place (
-            x=1393, y=0,
-            width=48,
-            height=37)
+        self.b1.bind("<Button-1>", lambda e: self.choose_portfolio_image())
+        self.b1.place(
+            x=201, y=675,
+            width=155,
+            height=56)
+        self.changeOnHover(self.b1, self.getportfolioimage_hover, self.getportfolioimage)
 
-        self.img6 = PhotoImage (file=f"resources/images/screen1/img6.png")
-        self.img6_hover = PhotoImage (file=f"resources/images/screen1/img6_hover.png")
-        self.b6 = Label (
-            image=self.img6,
+
+        self.l1 = Label(
+            text="",
             borderwidth=0,
             highlightthickness=0,
-            relief="flat")
-        self.b6.place (
-            x=1346, y=0,
-            width=48,
-            height=37)
+            relief="flat",
+            bg="#83568a",
+            font=("Arial", 10, "normal")
+        )
+        self.l1.place(x=380, y=695)
 
-        self.changeOnHover (self.b4, self.img4_hover, self.img4)
-        self.changeOnHover (self.b6, self.img6_hover, self.img6)
-        self.b4.bind("<Button-1>", lambda e: self.close())
-        self.b6.bind("<Button-1>", lambda e: self.minimize())
-        self.win.focus_force()
-        self.win.bind("<Alt-KeyPress-Tab>", lambda e: self.minimize2())
-        self.bind("<Map>", self.frame_mapped)
+
+    def choose_portfolio_image(self):
+        name = filedialog.askopenfilename(filetypes=[('image files', '.png')])
+        self.l1.configure(text=name)
 
     def btn_clicked(self):
-        self.win.change_to_screen(Screen=Screen2)
+        name = self.entry0.get()
+        email = self.entry1.get()
+        password = self.entry2.get()
+        asu_id = self.entry3.get()
+        uel_id = self.entry4.get()
+        program = self.entry5.get()
+        picture_path = self.l1.cget("text")
+        if self.win.check_filled(name, email, password, asu_id, uel_id, program, picture_path):
+            student_data = IC.Student(name=name, email=email, password=password, ID=asu_id,
+                                      UEL_ID=uel_id, picture_name=picture_path, program_name=program)
+            self.win.student = student_data
+            self.win.change_to_screen(Screen=Screen2)
+        else:
+            tkinter.messagebox.showerror("Error", "Error Occured: Some fields are empty!!")
 
     def changeOnHover(self, button, colorOnHover, colorOnLeave):
         button.bind ("<Enter>", func=lambda e: button.config (
@@ -158,22 +194,6 @@ class Screen1(Frame):
 
     def close(self):
         os._exit (0)
-
-    def frame_mapped(self, e):
-        self.win.update_idletasks ()
-        self.win.overrideredirect (True)
-        self.win.state('normal')
-
-    def minimize(self):
-        self.win.update_idletasks ()
-        self.win.overrideredirect (False)
-        self.win.state ('iconic')
-
-    def minimize2(self):
-        self.win.update_idletasks ()
-        self.win.overrideredirect (False)
-        self.win.state ('iconic')
-
 
 
 

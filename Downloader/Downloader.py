@@ -18,26 +18,19 @@ class Downloader:
         self.ex = {val: key for key, val in self.extension.items()}
         self.session = None
         self.session_key = None
-        while True:
-            try:
-                self.auth_moodle(self.app_data)
-                self.Param = {'sesskey': f'{self.session_key}',
-                         'info': 'core_course_get_enrolled_courses_by_timeline_classification'}
 
-                self.dict_pay = '[{"index":0,"methodname":"core_course_get_enrolled_courses_by_timeline_classification",' \
-                           '"args":{"offset":0,"limit":96,"classification":"all","sort":"fullname"}}]'
-                self.re = self.session.get("https://lms.eng.asu.edu.eg/lib/ajax/service.php",
-                                data=self.dict_pay, params=self.Param)
+        self.auth_moodle(self.app_data)
+        self.Param = {'sesskey': f'{self.session_key}',
+                 'info': 'core_course_get_enrolled_courses_by_timeline_classification'}
 
-                self.data = self.re.json()
-                self.subjects = {subject['fullname'].split()[0]: subject['viewurl'] for subject in self.data[0]['data']['courses']}
-                break
-            except ConnectionAbortedError:
-                continue
-            except ConnectionRefusedError:
-                continue
-            except ConnectionError:
-                continue
+        self.dict_pay = '[{"index":0,"methodname":"core_course_get_enrolled_courses_by_timeline_classification",' \
+                   '"args":{"offset":0,"limit":96,"classification":"all","sort":"fullname"}}]'
+        self.re = self.session.get("https://lms.eng.asu.edu.eg/lib/ajax/service.php",
+                        data=self.dict_pay, params=self.Param)
+
+        self.data = self.re.json()
+        self.subjects = {subject['fullname'].split()[0]: subject['viewurl'] for subject in self.data[0]['data']['courses']}
+
 
     def auth_moodle(self, data: dict) -> requests.Session():
         login, password, url_domain = data.values()
@@ -54,37 +47,28 @@ class Downloader:
         self.session_key = session_key
 
     def get_files(self, subjects):
-        while True:
-            try:
-                for subject_code in subjects:
-                    sub_link = self.subjects[subject_code]
-                    re = self.session.get(sub_link)
+            for subject_code in subjects:
+                sub_link = self.subjects[subject_code]
+                re = self.session.get(sub_link)
+                res = BeautifulSoup(re.content, 'html.parser')
+                re = res.select('.activity.assign.modtype_assign a')
+                assign_links = {atag.getText():atag.get("href") for atag in re}
+                for key1, ass in assign_links.items():
+                    re = self.session.get(ass)
                     res = BeautifulSoup(re.content, 'html.parser')
-                    re = res.select('.activity.assign.modtype_assign a')
-                    assign_links = {atag.getText():atag.get("href") for atag in re}
-                    for key1, ass in assign_links.items():
-                        re = self.session.get(ass)
-                        res = BeautifulSoup(re.content, 'html.parser')
-                        link = res.select(".submissionstatustable .fileuploadsubmission a")
-                        if bool(link):
-                            path = None
-                            name = link[0].getText()
-                            if "LAB" in key1.upper():
-                                path = subject_code + "/lab/" + name
-                            elif "PROJECT" in key1.upper():
-                                path = subject_code + "/project/" + name
-                            elif "ASS" in key1.upper():
-                                path = subject_code + "/ass/" + name
-                            re = self.session.get(link[0].get("href"), allow_redirects=True)
-                            self.save_file(path, re.content)
-                break
+                    link = res.select(".submissionstatustable .fileuploadsubmission a")
+                    if bool(link):
+                        path = None
+                        name = link[0].getText()
+                        if "LAB" in key1.upper():
+                            path = subject_code + "/lab/" + name
+                        elif "PROJECT" in key1.upper():
+                            path = subject_code + "/project/" + name
+                        elif "ASS" in key1.upper():
+                            path = subject_code + "/ass/" + name
+                        re = self.session.get(link[0].get("href"), allow_redirects=True)
+                        self.save_file(path, re.content)
 
-            except ConnectionAbortedError:
-                continue
-            except ConnectionRefusedError:
-                continue
-            except ConnectionError:
-                continue
 
     def save_file(self, filepath, content):
         filename = "Subjects/" + filepath
@@ -93,38 +77,30 @@ class Downloader:
             f.write(content)
 
     def get_quizzes(self, subjects):
-        while True:
-            try:
-                for subject_code in subjects:
-                    sub_link = self.subjects[subject_code]
-                    re = self.session.get(sub_link)
-                    res = BeautifulSoup(re.content, 'html.parser')
-                    re = res.select('.activity.quiz.modtype_quiz a')
-                    quiz_links = {atag.getText(): atag.get("href") for atag in re}
-                    for key, quiz in quiz_links.items():
-                        re = self.session.get(quiz)
-                        res = BeautifulSoup(re.content, 'html.parser')
-                        body = res.select(".quizattemptsummary a")
-                        if bool(body):
-                            cookies = self.session.cookies.items()
-                            option = {
-                                'cookie': cookies,
-                                'no-outline': None,
-                                'page-size': 'A4',
-                                'print-media-type': None,
-                                'quiet': None
-                            }
-                            os.makedirs(os.path.dirname(f"Subjects/{subject_code}/quizzes/{key}.pdf"), exist_ok=True)
-                            config = pdfkit.configuration(wkhtmltopdf="resources/wkhtmltopdf/bin/wkhtmltopdf.exe")
-                            pdfkit.from_url(body[0].get("href"), f"Subjects/{subject_code}/quizzes/{key}.pdf",
-                                            configuration=config, options=option)
-                break
-            except ConnectionAbortedError:
-                continue
-            except ConnectionRefusedError:
-                continue
-            except ConnectionError:
-                continue
+        for subject_code in subjects:
+            sub_link = self.subjects[subject_code]
+            re = self.session.get(sub_link)
+            res = BeautifulSoup(re.content, 'html.parser')
+            re = res.select('.activity.quiz.modtype_quiz a')
+            quiz_links = {atag.getText(): atag.get("href") for atag in re}
+            for key, quiz in quiz_links.items():
+                re = self.session.get(quiz)
+                res = BeautifulSoup(re.content, 'html.parser')
+                body = res.select(".quizattemptsummary a")
+                if bool(body):
+                    cookies = self.session.cookies.items()
+                    option = {
+                        'cookie': cookies,
+                        'no-outline': None,
+                        'page-size': 'A4',
+                        'print-media-type': None,
+                        'quiet': None
+                    }
+                    os.makedirs(os.path.dirname(f"Subjects/{subject_code}/quizzes/{key}.pdf"), exist_ok=True)
+                    config = pdfkit.configuration(wkhtmltopdf="resources/wkhtmltopdf/bin/wkhtmltopdf.exe")
+                    pdfkit.from_url(body[0].get("href"), f"Subjects/{subject_code}/quizzes/{key}.pdf",
+                                    configuration=config, options=option)
+
 
 
 
