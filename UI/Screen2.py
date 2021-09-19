@@ -4,7 +4,6 @@ from tkinter import *
 
 import InfoContainers
 import InfoContainers as IC
-from UI.Screen3 import Screen3
 
 class Screen2(Frame):
     def __init__(self, win):
@@ -383,35 +382,32 @@ class Screen2(Frame):
         self.fill_entries()
 
     def fill_entries(self):
-        self.win.current_subject: InfoContainers.Subject
-        sub = self.win.current_subject
-        if sub is not None:
+        if self.win.current_subject is not None:
+            sub = self.win.current_subject
             self.entry0.insert(0, sub.ASU_course_name)
-            self.entry1.insert(0, sub.quizzes[1].total)
+            self.entry1.insert(0, sub.quizzes.total[1])
             self.entry2.insert(0, sub.assignments.total)
             self.entry3.insert(0, sub.UEL_module_code)
             self.entry4.insert(0, sub.ASU_course_code)
-            self.entry5.insert(0, sub.quizzes[0].total)
-            self.entry6.insert(0, sub.quizzes[2].total)
+            self.entry5.insert(0, sub.quizzes.total[0])
+            self.entry6.insert(0, sub.quizzes.total[2])
             self.entry7.insert(0, sub.project.total)
             self.entry8.insert(0, sub.labs.total)
-            self.entry9.insert(0, sub.midterm.total)
+            self.entry9.insert(0, sub.midterms.total)
             self.entry10.insert(0, sub.assignments.grade)
-            self.entry11.insert(0, sub.quizzes[0].grade)
-            self.entry12.insert(0, sub.quizzes[1].grade)
-            self.entry13.insert(0, sub.quizzes[2].grade)
+            self.entry11.insert(0, sub.quizzes.grade[0])
+            self.entry12.insert(0, sub.quizzes.grade[1])
+            self.entry13.insert(0, sub.quizzes.grade[2])
             self.entry14.insert(0, sub.instructor_signature)
             self.entry15.insert(0, sub.assistant_signature)
             self.entry16.insert(0, sub.project.grade)
             self.entry17.insert(0, sub.labs.grade)
-            self.entry18.insert(0, sub.midterm.grade)
-            self.entry19.insert(sub.UEL_module_name)
+            self.entry18.insert(0, sub.midterms.grade)
+            self.entry19.insert(0, sub.UEL_module_name)
 
     def btn_clicked_done(self):
-
         self.btn_clicked_add()
-        self.win.subjects = self.subjects
-        self.win.change_to_screen(Screen=Screen3)
+        self.win.change_to_screen3()
 
     def btn_clicked_add(self):
         asu_course_name = self.entry0.get()
@@ -435,9 +431,7 @@ class Screen2(Frame):
         mid_mark = self.entry18.get()
         uel_course_name = self.entry19.get()
         subject = IC.Subject()
-        quiz1 = IC.Quiz(grade=quiz1_mark, total=quiz1_total, num=1)
-        quiz2 = IC.Quiz(grade=quiz2_mark, total=quiz2_total, num=2)
-        quiz3 = IC.Quiz(grade=quiz3_mark, total=quiz3_total, num=3)
+        quiz = IC.Quiz(grade=[quiz1_mark, quiz2_mark, quiz3_mark], total=[quiz1_total, quiz2_total, quiz3_total])
         lab = IC.Lab(grade=lab_mark, total=lab_total)
         assignment = IC.Assignment(grade=assign_mark, total=assign_total)
         project = IC.Project(grade=project_mark, total=project_total)
@@ -469,18 +463,19 @@ class Screen2(Frame):
             subject.UEL_module_name = uel_course_name
             subject.UEL_module_code = uel_course_code
             subject.assistant_signature = ta_name
-            subject.quizzes.append(quiz1)
-            subject.quizzes.append(quiz2)
-            subject.quizzes.append(quiz3)
+            subject.quizzes = quiz
             subject.assignments = assignment
             subject.project = project
             subject.labs = lab
             subject.midterms = midterm
             if self.win.current_subject is None:
                 self.subjects.append(subject)
+                self.win.subjects = self.subjects
             else:
                 index = self.win.subjects.index(self.win.current_subject)
                 self.win.subjects[index] = subject
+                self.win.current_subject = None
+
         else:
             tkinter.messagebox.showerror("Error", "Some fields are missing!!")
 
@@ -490,53 +485,3 @@ class Screen2(Frame):
             image=colorOnHover))
         button.bind ("<Leave>", func=lambda e: button.config(
             image=colorOnLeave))
-
-
-
-
-
-
-    # def close(self):
-    #     os._exit (0)
-    #
-    # def frame_mapped(self, e):
-    #     self.win.update_idletasks ()
-    #     self.win.overrideredirect (True)
-    #     self.win.state('normal')
-    #
-    # def minimize(self):
-    #     self.win.update_idletasks ()
-    #     self.win.overrideredirect (False)
-    #     self.win.state ('iconic')
-
-    # self.img4 = PhotoImage (file=f"resources/images/screen1/img4.png")
-    # self.img4_hover = PhotoImage (file=f"resources/images/screen1/img4_hover.png")
-    # self.b4 = Label (
-    #     image=self.img4,
-    #     borderwidth=0,
-    #     highlightthickness=0,
-    #     relief="flat")
-    # self.b4.place (
-    #     x=1393, y=0,
-    #     width=48,
-    #     height=37)
-    #
-    # self.img6 = PhotoImage (file=f"resources/images/screen1/img6.png")
-    # self.img6_hover = PhotoImage (file=f"resources/images/screen1/img6_hover.png")
-    # self.b6 = Label (
-    #     image=self.img6,
-    #     borderwidth=0,
-    #     highlightthickness=0,
-    #     relief="flat")
-    # self.b6.place (
-    #     x=1346, y=0,
-    #     width=48,
-    #     height=37)
-    #
-    # self.changeOnHover (self.b4, self.img4_hover, self.img4)
-    # self.changeOnHover (self.b6, self.img6_hover, self.img6)
-    #
-    # self.b4.bind("<Button-1>", lambda e: self.close())
-    # self.b6.bind("<Button-1>", lambda e: self.minimize())
-    #
-    # self.bind("<Map>", self.frame_mapped)

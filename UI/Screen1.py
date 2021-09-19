@@ -195,20 +195,5 @@ class Screen1(Frame):
     def close(self):
         os._exit (0)
 
-    # def frame_mapped(self, e):
-    #     self.win.update_idletasks ()
-    #     self.win.overrideredirect (True)
-    #     self.win.state('normal')
-    #
-    # def minimize(self):
-    #     self.win.update_idletasks ()
-    #     self.win.overrideredirect (False)
-    #     self.win.state ('iconic')
-    #
-    # def minimize2(self):
-    #     self.win.update_idletasks ()
-    #     self.win.overrideredirect (False)
-    #     self.win.state ('iconic')
-
 
 

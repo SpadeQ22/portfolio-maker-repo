@@ -42,7 +42,7 @@ class Midterm:
         self.grade = kwargs.get("grade")
         self.total = kwargs.get("total")
         self.num = 1
-        self.file_path = None
+        self.file_paths = None
 
 
 class Project:
@@ -60,7 +60,7 @@ class Quiz:
         self.grade = kwargs.get("grade")
         self.total = kwargs.get("total")
         self.num = kwargs.get("num")
-        self.file_path = None
+        self.file_paths = None
 
 
 class Assignment:

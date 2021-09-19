@@ -18,7 +18,7 @@ class Screen3(Frame):
         self.first_column = 168
         self.row_step = 164
         self.col_step = 414
-        self.subjects_count = 0;
+        self.subjects_count = 0
         self.canvas = Canvas(
             self,
             bg="#83568a",
@@ -55,11 +55,10 @@ class Screen3(Frame):
 
     def btn_clicked(self):
         self.win.download_splash()
-        self.win.change_to_screen(Screen4)
 
     def return_to_edit(self, subject):
         self.win.current_subject = subject
-        self.win.change_to_screen(Screen2)
+        self.win.change_to_screen2()
 
     def changeOnHover(self, button, colorOnHover, colorOnLeave):
         button.bind("<Enter>", func=lambda e: button.config(
