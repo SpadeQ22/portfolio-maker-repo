@@ -28,11 +28,11 @@ class Subject:
         self.semester = kwargs.get("semester")
         self.instructor_signature = kwargs.get("instructor_signature")
         self.assistant_signature = kwargs.get("assistant_signature")
-        self.midterms: Midterm
-        self.project: Project
-        self.assignments: Assignment
-        self.labs: Lab
-        self.quizzes = []
+        self.midterm = kwargs.get("midterm")
+        self.project = kwargs.get("project")
+        self.assignments = kwargs.get("assignments")
+        self.labs = kwargs.get("labs")
+        self.quizzes = kwargs.get("quizzes")
 
 
 class Midterm:
@@ -41,7 +41,7 @@ class Midterm:
         self.grade = kwargs.get("grade")
         self.total = kwargs.get("total")
         self.num = 1
-        self.file_paths = None
+        self.file_paths = []
 
 
 class Project:
@@ -59,7 +59,7 @@ class Quiz:
         self.grade = kwargs.get("grade")
         self.total = kwargs.get("total")
         self.num = kwargs.get("num")
-        self.file_paths = None
+        self.file_paths = []
 
 
 class Assignment:

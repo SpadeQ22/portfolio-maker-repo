@@ -1,9 +1,10 @@
 import os
+import threading
 from tkinter import *
 import tkinter.font as tkFont
 from UI.Screen2 import Screen2
 from UI.Screen4 import Screen4
-
+from Autofill.filler import createSubjectFiller
 
 class Screen3(Frame):
     def __init__(self, window):
@@ -55,6 +56,8 @@ class Screen3(Frame):
 
     def btn_clicked(self):
         self.win.download_splash()
+        for subject in self.win.subjects:
+            threading.Thread(createSubjectFiller, args=(subject, self.win.student)).start()
 
     def return_to_edit(self, subject):
         self.win.current_subject = subject

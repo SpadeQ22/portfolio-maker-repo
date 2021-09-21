@@ -61,7 +61,7 @@ class Filler:
             else:
                 continue
 
-    def infoToReplace(self, **kwargs):
+    def infoToReplace(self, subject, **kwargs):
 
         """
         takes all info to be replaced in a given template
@@ -94,76 +94,149 @@ class Filler:
                    self.marker2: "*"}
 
         doc.render(context)
-        if (kwargs["template_name"] == 'Autofill/Templates and pictures/Header Template.docx' or
-                kwargs["template_name"] == 'Autofill/Templates and pictures/Midterm Template.docx' or
-                kwargs["template_name"] == 'Autofill/Templates and pictures/Project Template.docx'):
-            doc.save("Autofill/AutofillResults/My " +
-                     (kwargs["template_name"].replace(" Template.docx", "")).replace("Autofill/Templates and pictures/",
-                                                                                     "") + ".docx")
-        else:
-            doc.save("Autofill/AutofillResults/My " +
-                     (kwargs["template_name"].replace(" Template.docx", "")).replace("Autofill/Templates and pictures/",
-                                                                                     "")
+        if kwargs["template_name"] == 'Autofill/Templates and pictures/Header Template.docx':
+            doc.save(f"Subjects/{subject.Asu_Course_code}/header/My Header")
+        elif kwargs["template_name"] == 'Autofill/Templates and pictures/Assignment Template.docx':
+            doc.save(f"Subjects/{subject.Asu_Course_code}/ass/My " +
+                     (kwargs["template_name"].replace(" Template.docx", "")).replace(f"Subjects/{subject.Asu_Course_code}/ass/",                                                                       "")
+                     + str(kwargs["num"]) + ".docx")
+        elif kwargs["template_name"] == 'Autofill/Templates and pictures/Quiz Template.docx':
+            doc.save(f"Subjects/{subject.Asu_Course_code}/quiz/My " +
+                     (kwargs["template_name"].replace(" Template.docx", "")).replace(f"Subjects/{subject.Asu_Course_code}/quiz/",                                                                       "")
+                     + str(kwargs["num"]) + ".docx")
+        elif kwargs["template_name"] == 'Autofill/Templates and pictures/Lab Template.docx':
+            doc.save(f"Subjects/{subject.Asu_Course_code}/lab/My " +
+                     (kwargs["template_name"].replace(" Template.docx", "")).replace(f"Subjects/{subject.Asu_Course_code}/lab/",                                                                       "")
+                     + str(kwargs["num"]) + ".docx")
+        elif kwargs["template_name"] == 'Autofill/Templates and pictures/Project Template.docx':
+            doc.save(f"Subjects/{subject.Asu_Course_code}/project/My " +
+                     (kwargs["template_name"].replace(" Template.docx", "")).replace(f"Subjects/{subject.Asu_Course_code}/project/",                                                                       "")
+                     + str(kwargs["num"]) + ".docx")
+        elif kwargs["template_name"] == 'Autofill/Templates and pictures/Midterm Template.docx':
+            doc.save(f"Subjects/{subject.Asu_Course_code}/midterm/My " +
+                     (kwargs["template_name"].replace(" Template.docx", "")).replace(f"Subjects/{subject.Asu_Course_code}/midterm/",                                                                       "")
                      + str(kwargs["num"]) + ".docx")
 
 
-def createSubjectSliceFiller(student, subject, subjectSlice):
+def createSubjectSliceMidterm(student, subject):
     """
 
     Creates a filler object to process grade markers and to replace all info passed in a given template
-    (including Header Template)
 
     :param student: takes student object to pass its parameter to infoToReplace method
     :param subject: takes subject object to pass its parameter to infoToReplace method
-    :param subjectSlice: takes a slice (eg. lab, midterm...) of a subject
     :return: the results of infoToReplace
     """
+    midterm_fill = Filler(grade=subject.midterm.grade, total=subject.midterm.total)
 
-    if isinstance(subjectSlice, Assignment):
-        template_name = 'Autofill/Templates and pictures/Assignment Template.docx'
-    elif isinstance(subjectSlice, Quiz):
-        template_name = 'Autofill/Templates and pictures/Quiz Template.docx'
-    elif isinstance(subjectSlice, Lab):
-        template_name = 'Autofill/Templates and pictures/Lab Template.docx'
-    elif isinstance(subjectSlice, Project):
-        template_name = 'Autofill/Templates and pictures/Project Template.docx'
-    elif isinstance(subjectSlice, Midterm):
-        template_name = 'Autofill/Templates and pictures/Midterm Template.docx'
-    else:
-        template_name = 'Autofill/Templates and pictures/Header Template.docx'
+    midterm_fill.infoToReplace(subject=subject, template_name='Autofill/Templates and pictures/Midterm Template.docx',
+                               name=student.name, picture=student.picture_name,
+                               program_name=student.program_name, academic_year=student.academic_year,
+                               ID=student.ID, UEL_ID=student.UEL_ID, ASU_course_code=subject.ASU_course_code,
+                               UEL_module_code=subject.UEL_module_code, ASU_course_name=subject.ASU_course_name,
+                               UEL_module_name=subject.UEL_module_name, semester=subject.semester,
+                               grade=subject.midterm.grade,
+                               instructor_signature=subject.instructor_signature,
+                               assistant_signature=subject.assistant_signature, num=1)
 
+
+def createSubjectSliceAssignments(student, subject):
+    for i in range(len(subject.assignments.file_paths)):
+        ass_fill = Filler(grade=subject.assignments.grade, total=subject.assignments.total)
+
+        ass_fill.infoToReplace(subject=subject, template_name='Autofill/Templates and pictures/Assignment Template.docx',
+                               name=student.name, picture=student.picture_name,
+                               program_name=student.program_name, academic_year=student.academic_year,
+                               ID=student.ID, UEL_ID=student.UEL_ID, ASU_course_code=subject.ASU_course_code,
+                               UEL_module_code=subject.UEL_module_code, ASU_course_name=subject.ASU_course_name,
+                               UEL_module_name=subject.UEL_module_name, semester=subject.semester,
+                               grade=subject.assignments.grade,
+                               instructor_signature=subject.instructor_signature,
+                               assistant_signature=subject.assistant_signature, num=i+1)
+
+
+def createSubjectSliceLabs(student, subject):
+    for i in range(len(subject.labs.file_paths)):
+        lab_fill = Filler(grade=subject.labs.grade, total=subject.labs.total)
+
+        lab_fill.infoToReplace(subject=subject, template_name='Autofill/Templates and pictures/Lab Template.docx',
+                               name=student.name, picture=student.picture_name,
+                               program_name=student.program_name, academic_year=student.academic_year,
+                               ID=student.ID, UEL_ID=student.UEL_ID, ASU_course_code=subject.ASU_course_code,
+                               UEL_module_code=subject.UEL_module_code, ASU_course_name=subject.ASU_course_name,
+                               UEL_module_name=subject.UEL_module_name, semester=subject.semester,
+                               grade=subject.labs.grade,
+                               instructor_signature=subject.instructor_signature,
+                               assistant_signature=subject.assistant_signature,
+                               num=i+1)
+
+
+def createSubjectSliceProject(student, subject):
+    project_fill = Filler(grade=subject.project.grade, total=subject.project.total, num=1)
+
+    project_fill.infoToReplace(subject=subject, template_name='Autofill/Templates and pictures/Project Template.docx',
+                               name=student.name, picture=student.picture_name,
+                               program_name=student.program_name, academic_year=student.academic_year,
+                               ID=student.ID, UEL_ID=student.UEL_ID, ASU_course_code=subject.ASU_course_code,
+                               UEL_module_code=subject.UEL_module_code, ASU_course_name=subject.ASU_course_name,
+                               UEL_module_name=subject.UEL_module_name, semester=subject.semester,
+                               grade=subject.project.grade,
+                               instructor_signature=subject.instructor_signature,
+                               assistant_signature=subject.assistant_signature,
+                               num=1)
+
+
+def createSubjectSliceQuizzes(student, subject):
+    for i in range(len(subject.quizzes.file_paths)):
+        quiz_fill = Filler(grade=subject.quizzes.grade[i], total=subject.quizzes.total[i])
+
+        quiz_fill.infoToReplace(subject=subject, template_name='Autofill/Templates and pictures/Quiz Template.docx',
+                                name=student.name, picture=student.picture_name,
+                                program_name=student.program_name, academic_year=student.academic_year,
+                                ID=student.ID, UEL_ID=student.UEL_ID, ASU_course_code=subject.ASU_course_code,
+                                UEL_module_code=subject.UEL_module_code, ASU_course_name=subject.ASU_course_name,
+                                UEL_module_name=subject.UEL_module_name, semester=subject.semester,
+                                grade=subject.quizzes.grade[i],
+                                instructor_signature=subject.instructor_signature,
+                                assistant_signature=subject.assistant_signature,
+                                num=i+1)
+
+
+def createHeader(student, subject):
     try:
-        fill = Filler(grade=subjectSlice.grade, total=subjectSlice.total, num=subjectSlice.num)
+        header = Header()
+        header_fill = Filler(grade=header.grade, total=header.total, num=header.num)
 
-        fill.infoToReplace(template_name=template_name, name=student.name, picture=student.picture_name,
-                           program_name=student.program_name, academic_year=student.academic_year,
-                           ID=student.ID, UEL_ID=student.UEL_ID, ASU_course_code=subject.ASU_course_code,
-                           UEL_module_code=subject.UEL_module_code, ASU_course_name=subject.ASU_course_name,
-                           UEL_module_name=subject.UEL_module_name, semester=subject.semester,
-                           grade=subjectSlice.grade,
-                           instructor_signature=subject.instructor_signature,
-                           assistant_signature=subject.assistant_signature, num=subjectSlice.num)
-
+        header_fill.infoToReplace(subject=subject, template_name='Autofill/Templates and pictures/Header Template.docx',
+                                  name=student.name, picture=student.picture_name,
+                                  program_name=student.program_name, academic_year=student.academic_year,
+                                  ID=student.ID, UEL_ID=student.UEL_ID, ASU_course_code=subject.ASU_course_code,
+                                  UEL_module_code=subject.UEL_module_code, ASU_course_name=subject.ASU_course_name,
+                                  UEL_module_name=subject.UEL_module_name, semester=subject.semester,
+                                  grade=header.grade,
+                                  instructor_signature=subject.instructor_signature,
+                                  assistant_signature=subject.assistant_signature,
+                                  num=1)
     except IOError:
-        if isinstance(subjectSlice, Header):
-            print("Image is not found in 'Autofill/Templates and pictures', or image type is not png!\n"
-                  "your image has been replaced with a placeholder, you can edit it or regenerate your document after "
-                  "changing the file location to 'Autofill/Templates and pictures'")
-            student.picture_name = 'placeholder.png'
-            createSubjectSliceFiller(student, subject, subjectSlice)
+        print("Image is not found in 'Autofill/Templates and pictures', or image type is not png!\n"
+              "your image has been replaced with a placeholder, you can edit it or regenerate your document after "
+              "changing the file location to 'Autofill/Templates and pictures'")
+        student.picture_name = 'placeholder.png'
+        createHeader(student, subject)
 
 
-def createSubjectFiller(student, subject, slicesList):
+def createSubjectFiller(student, subject):
     """
 
     :param student: takes student object
     :param subject: takes subject object
-    :param slicesList: takes subject slice
     :return: returns all student documents and saves them in AutofillResults file
     """
-    header = Header()
     print("Please wait for a few seconds...")
-    slicesList.append(header)
-    for i in range(len(slicesList)):
-        createSubjectSliceFiller(student=student, subject=subject, subjectSlice=slicesList[i])
+    createHeader(student, subject)
+    createSubjectSliceAssignments(student, subject)
+    createSubjectSliceQuizzes(student, subject)
+    createSubjectSliceLabs(student, subject)
+    createSubjectSliceProject(student, subject)
+    createSubjectSliceMidterm(student, subject)
     print("Your Documents are now ready! Please check them and edit if missing information")
