@@ -99,11 +99,9 @@ class Application(tk.Tk):
                 downloader.get_files(subject_codes)
                 downloader.get_quizzes(subject_codes)
                 self.current_subject = self.subjects[0]
-                for subject in self.subjects:
-                    createSubjectFiller(self.student, subject)
                 self.classify()
                 self.change_to_screen(Screen4)
-            except requests.exceptions.ConnectionError:
+            except Exception:
                 root.destroy()
                 ans = tk.messagebox.askretrycancel("Error 400", "Connection Error: Couldn't Connect to Server, Try Again!")
                 if ans:
@@ -132,7 +130,6 @@ class Application(tk.Tk):
                 if os.path.exists(f"Subjects/{subject.ASU_course_code}/ass"):
                     mypath = f"Subjects/{subject.ASU_course_code}/ass"
                     onlyfiles = [f"{mypath}/{f}" for f in listdir(mypath) if isfile(join(mypath, f))]
-                    onlyfiles.append(f"Subjects/{subject.ASU_course_code}/My Header.docx")
                     converter.convert_to_pdf(onlyfiles)
                     onlyfiles = [f"{mypath}/{f}" for f in listdir(mypath) if isfile(join(mypath, f))]
                     subject.assignments.file_paths = onlyfiles
@@ -167,14 +164,13 @@ class Application(tk.Tk):
                     subject.midterms.file_paths = onlyfiles
 
     def merger_interface(self):
+        for subject in self.subjects:
+            createSubjectFiller(self.student, subject)
         pdfs_to_merge = []
         for subject in self.subjects:
-            pdfs_to_merge.append(f"Subjects/{subject.ASU_course_code}/My Header.pdf")
-            pdfs_to_merge.append(subject.assignments.file_paths)
-            pdfs_to_merge.append(subject.quizzes.file_paths)
-            pdfs_to_merge.append(subject.midterm.file_paths)
-            pdfs_to_merge.append(subject.labs.file_paths)
-            pdfs_to_merge.append(subject.project.file_paths)
+            pdfs_to_merge = [f"Subjects/{subject.ASU_course_code}/My Header.pdf"] + subject.assignments.file_paths + \
+                            subject.quizzes.file_paths + subject.midterms.file_paths \
+                            + subject.labs.file_paths + subject.project.file_paths
             merge.merge_pdfs(pdfs_to_merge, f"Subjects/{subject.ASU_course_code}")
             pdfs_to_merge = []
         tkinter.messagebox.showinfo("Success", "Portfolios Generated Successfully")

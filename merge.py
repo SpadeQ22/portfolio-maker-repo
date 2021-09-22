@@ -20,9 +20,9 @@ def merge_pdfs(files, path):
             pdf_writer.addPage(page_obj)
 
         # Now that you have copied all the pages in both the documents, write them into the a new document
-        pdf_output_file = open(path + ' My Portfolio.pdf', 'wb')
+        pdf_output_file = open(path + '/My Portfolio.pdf', 'wb')
         pdf_writer.write(pdf_output_file)
-        pdf_output_file.name.replace(path, "")
+        #pdf_output_file.name.replace(path, "")
         # Close all the files - Created as well as opened
         pdf_file.close()
         pdf_output_file.close()

@@ -4,6 +4,7 @@ import os
 from docxtpl import DocxTemplate, InlineImage
 from docx.shared import Cm
 
+import converter
 from InfoContainers import Assignment, Quiz, Lab, Project, Header, Midterm
 
 
@@ -101,6 +102,8 @@ class Filler:
         doc.render(context)
         if kwargs["template_name"] == 'Autofill/Templates and pictures/Header Template.docx':
             doc.save(f"Subjects/{subject.ASU_course_code}/My Header.docx")
+            converter.convert_to_pdf([f"Subjects/{subject.ASU_course_code}/My Header.docx"])
+
         elif kwargs["template_name"] == 'Autofill/Templates and pictures/Assignment Template.docx':
 
             # os.makedirs(os.path.dirname(f"Subjects/{subject.ASU_course_code}/ass/AssignmentCover"
@@ -108,6 +111,9 @@ class Filler:
 
             doc.save(f"Subjects/{subject.ASU_course_code}/ass/AssignmentCover"
                      + str(kwargs["num"]) + ".docx")
+
+            converter.convert_to_pdf([f"Subjects/{subject.ASU_course_code}/ass/AssignmentCover"
+                     + str(kwargs["num"]) + ".docx"])
 
         elif kwargs["template_name"] == 'Autofill/Templates and pictures/Quiz Template.docx':
 
@@ -117,6 +123,9 @@ class Filler:
             doc.save(f"Subjects/{subject.ASU_course_code}/quizzes/QuizCover"
                      + str(kwargs["num"]) + ".docx")
 
+            converter.convert_to_pdf([f"Subjects/{subject.ASU_course_code}/quizzes/QuizCover"
+                     + str(kwargs["num"]) + ".docx"])
+
         elif kwargs["template_name"] == 'Autofill/Templates and pictures/Lab Template.docx':
 
             # os.makedirs(os.path.dirname(f"Subjects/{subject.ASU_course_code}/lab/LabCover"
@@ -124,6 +133,9 @@ class Filler:
 
             doc.save(f"Subjects/{subject.ASU_course_code}/lab/LabCover"
                      + str(kwargs["num"]) + ".docx")
+
+            converter.convert_to_pdf([f"Subjects/{subject.ASU_course_code}/lab/LabCover"
+                     + str(kwargs["num"]) + ".docx"])
 
         elif kwargs["template_name"] == 'Autofill/Templates and pictures/Project Template.docx':
 
@@ -133,6 +145,9 @@ class Filler:
             doc.save(f"Subjects/{subject.ASU_course_code}/project/ProjectCover"
                      + str(kwargs["num"]) + ".docx")
 
+            converter.convert_to_pdf([f"Subjects/{subject.ASU_course_code}/project/ProjectCover"
+                     + str(kwargs["num"]) + ".docx"])
+
         elif kwargs["template_name"] == 'Autofill/Templates and pictures/Midterm Template.docx':
 
             os.makedirs(os.path.dirname(f"Subjects/{subject.ASU_course_code}/midterm/MidtermCover"
@@ -140,6 +155,8 @@ class Filler:
 
             doc.save(f"Subjects/{subject.ASU_course_code}/midterm/MidtermCover"
                      + str(kwargs["num"]) + ".docx")
+            converter.convert_to_pdf([f"Subjects/{subject.ASU_course_code}/midterm/MidtermCover"
+                     + str(kwargs["num"]) + ".docx"])
 
 
 def createSubjectSliceMidterm(student, subject):
@@ -162,6 +179,7 @@ def createSubjectSliceMidterm(student, subject):
                                grade=subject.midterms.grade,
                                instructor_signature=subject.instructor_signature,
                                assistant_signature=subject.assistant_signature, num=1)
+    subject.midterms.file_paths.insert(0, f"Subjects/{subject.ASU_course_code}/midterm/MidtermCover1.pdf")
 
 
 def createSubjectSliceAssignments(student, subject):
@@ -179,6 +197,9 @@ def createSubjectSliceAssignments(student, subject):
                                instructor_signature=subject.instructor_signature,
                                assistant_signature=subject.assistant_signature, num=i + 1)
 
+        subject.assignments.file_paths.insert((2*i), f"Subjects/{subject.ASU_course_code}"
+                                                          f"/ass/AssignmentCover{i+1}.pdf")
+
 
 def createSubjectSliceLabs(student, subject):
     for i in range(len(subject.labs.file_paths)):
@@ -194,6 +215,9 @@ def createSubjectSliceLabs(student, subject):
                                instructor_signature=subject.instructor_signature,
                                assistant_signature=subject.assistant_signature,
                                num=i + 1)
+        subject.labs.file_paths.insert((2*i), f"Subjects/{subject.ASU_course_code}"
+                                                      f"/lab/LabCover{i+1}.pdf")
+
 
 
 def createSubjectSliceProject(student, subject):
@@ -209,6 +233,7 @@ def createSubjectSliceProject(student, subject):
                                instructor_signature=subject.instructor_signature,
                                assistant_signature=subject.assistant_signature,
                                num=1)
+    subject.project.file_paths.insert(0, f"Subjects/{subject.ASU_course_code}/project/ProjectCover1.pdf")
 
 
 def createSubjectSliceQuizzes(student, subject):
@@ -225,6 +250,8 @@ def createSubjectSliceQuizzes(student, subject):
                                 instructor_signature=subject.instructor_signature,
                                 assistant_signature=subject.assistant_signature,
                                 num=i + 1)
+        subject.quizzes.file_paths.insert(2*i,
+                                           f"Subjects/{subject.ASU_course_code}/quizzes/QuizCover{i + 1}.pdf")
 
 
 def createHeader(student, subject):
