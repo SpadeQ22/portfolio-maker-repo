@@ -56,8 +56,6 @@ class Screen3(Frame):
 
     def btn_clicked(self):
         self.win.download_splash()
-        for subject in self.win.subjects:
-            threading.Thread(createSubjectFiller, args=(subject, self.win.student)).start()
 
     def return_to_edit(self, subject):
         self.win.current_subject = subject

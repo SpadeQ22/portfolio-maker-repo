@@ -33,20 +33,26 @@ class Downloader:
 
 
     def auth_moodle(self, data: dict) -> requests.Session():
-        login, password, url_domain = data.values()
-        s = requests.Session()
-        r_1 = s.get(url=url_domain + "/login/index.php")
-        pattern_auth = '<input type="hidden" name="logintoken" value="\w{32}">'
-        token = re.findall(pattern_auth, r_1.text)
-        token = re.findall("\w{32}", token[0])[0]
-        payload = {'anchor': '', 'logintoken': token, 'username': login, 'password': password, 'rememberusername': 1}
-        r_2 = s.post(url=url_domain + "/login/index.php", data=payload)
-        sessionStr = re.findall('"sesskey":"\w*',r_2.text )
-        session_key = (re.split(':', sessionStr[0])[1])[1:]
-        self.session = s
-        self.session_key = session_key
+        try:
+            login, password, url_domain = data.values()
+            s = requests.Session()
+            r_1 = s.get(url=url_domain + "/login/index.php")
+            pattern_auth = '<input type="hidden" name="logintoken" value="\w{32}">'
+            token = re.findall(pattern_auth, r_1.text)
+            token = re.findall("\w{32}", token[0])[0]
+            payload = {'anchor': '', 'logintoken': token, 'username': login, 'password': password, 'rememberusername': 1}
+            r_2 = s.post(url=url_domain + "/login/index.php", data=payload)
+            sessionStr = re.findall('"sesskey":"\w*',r_2.text )
+            session_key = (re.split(':', sessionStr[0])[1])[1:]
+            self.session = s
+            self.session_key = session_key
+        except requests.exceptions.SSLError:
+            raise requests.exceptions.SSLError
+        except requests.exceptions.ConnectionError:
+            raise requests.exceptions.ConnectionError
 
     def get_files(self, subjects):
+        try:
             for subject_code in subjects:
                 sub_link = self.subjects[subject_code]
                 re = self.session.get(sub_link)
@@ -68,7 +74,10 @@ class Downloader:
                             path = subject_code + "/ass/" + name
                         re = self.session.get(link[0].get("href"), allow_redirects=True)
                         self.save_file(path, re.content)
-
+        except requests.exceptions.SSLError:
+            raise requests.exceptions.SSLError
+        except requests.exceptions.ConnectionError:
+            raise requests.exceptions.ConnectionError
 
     def save_file(self, filepath, content):
         filename = "Subjects/" + filepath
@@ -77,31 +86,33 @@ class Downloader:
             f.write(content)
 
     def get_quizzes(self, subjects):
-        for subject_code in subjects:
-            sub_link = self.subjects[subject_code]
-            re = self.session.get(sub_link)
-            res = BeautifulSoup(re.content, 'html.parser')
-            re = res.select('.activity.quiz.modtype_quiz a')
-            quiz_links = {atag.getText(): atag.get("href") for atag in re}
-            for key, quiz in quiz_links.items():
-                re = self.session.get(quiz)
+        try:
+            for subject_code in subjects:
+                sub_link = self.subjects[subject_code]
+                re = self.session.get(sub_link)
                 res = BeautifulSoup(re.content, 'html.parser')
-                body = res.select(".quizattemptsummary a")
-                if bool(body):
-                    cookies = self.session.cookies.items()
-                    option = {
-                        'cookie': cookies,
-                        'no-outline': None,
-                        'page-size': 'A4',
-                        'print-media-type': None,
-                        'quiet': None
-                    }
-                    os.makedirs(os.path.dirname(f"Subjects/{subject_code}/quizzes/{key}.pdf"), exist_ok=True)
-                    config = pdfkit.configuration(wkhtmltopdf="resources/wkhtmltopdf/bin/wkhtmltopdf.exe")
-                    pdfkit.from_url(body[0].get("href"), f"Subjects/{subject_code}/quizzes/{key}.pdf",
-                                    configuration=config, options=option)
+                re = res.select('.activity.quiz.modtype_quiz a')
+                quiz_links = {atag.getText(): atag.get("href") for atag in re}
+                for key, quiz in quiz_links.items():
+                    re = self.session.get(quiz)
+                    res = BeautifulSoup(re.content, 'html.parser')
+                    body = res.select(".quizattemptsummary a")
+                    if bool(body):
+                        cookies = self.session.cookies.items()
+                        option = {
+                            'cookie': cookies,
+                            'no-outline': None,
+                            'page-size': 'A4',
+                            'print-media-type': None,
+                            'quiet': None
+                        }
+                        os.makedirs(os.path.dirname(f"Subjects/{subject_code}/quizzes/{key}.pdf"), exist_ok=True)
+                        config = pdfkit.configuration(wkhtmltopdf="resources/wkhtmltopdf/bin/wkhtmltopdf.exe")
+                        pdfkit.from_url(body[0].get("href"), f"Subjects/{subject_code}/quizzes/{key}.pdf",
+                                        configuration=config, options=option)
 
-
-
-
+        except requests.exceptions.SSLError:
+            raise requests.exceptions.SSLError
+        except requests.exceptions.ConnectionError:
+            raise requests.exceptions.ConnectionError
 

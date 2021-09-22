@@ -1,4 +1,5 @@
 import os
+import sys
 import threading
 import tkinter as tk
 import tkinter.messagebox
@@ -6,8 +7,15 @@ from os import listdir
 from os.path import isfile, join
 from tkinter import ttk
 
+import requests.exceptions
+
+import Autofill
+
 import InfoContainers
 import UI.Screen2
+import converter
+import merge
+from Autofill.filler import createSubjectFiller
 from UI.Screen1 import Screen1
 from UI.Screen2 import Screen2
 from UI.Screen3 import Screen3
@@ -77,21 +85,34 @@ class Application(tk.Tk):
             my_progress['value'] += 2
             if my_progress['value'] == 100:
                 root.destroy()
-                self.current_subject = self.subjects[0]
-                self.change_to_screen(Screen4)
                 return
             if my_progress['value'] == 20:
                 my_label['text'] = 'Downloading files...'
             if my_progress['value'] == 80:
                 my_label['text'] = 'Organizing files and setting file paths...'
-            root.after(1000, step)
+            root.after(2500, step)
+
+        def start_download():
+            try:
+                downloader = Downloader(self.student.email, self.student.password)
+                subject_codes = [subject.ASU_course_code for subject in self.subjects]
+                downloader.get_files(subject_codes)
+                downloader.get_quizzes(subject_codes)
+                self.current_subject = self.subjects[0]
+                for subject in self.subjects:
+                    createSubjectFiller(self.student, subject)
+                self.classify()
+                self.change_to_screen(Screen4)
+            except requests.exceptions.ConnectionError:
+                root.destroy()
+                ans = tk.messagebox.askretrycancel("Error 400", "Connection Error: Couldn't Connect to Server, Try Again!")
+                if ans:
+                    self.download_splash()
+                else:
+                    sys.exit(0)
 
         root = tk.Tk()
-        try:
-            threading.Thread(target=self.start_download).start()
-        except Exception:
-            tk.messagebox.showerror("Error 400", "Connection Error: Couldn't Connect to Server Try Again!")
-            root.destroy()
+        threading.Thread(target=start_download).start()
         root.geometry("400x100")
         root.configure(bg="#83568a")
         root.resizable(False, False)
@@ -105,38 +126,55 @@ class Application(tk.Tk):
         step()
         root.mainloop()
 
-    def start_download(self):
-        downloader = Downloader(self.student.email, self.student.password)
-        subject_codes = [subject.ASU_course_code for subject in self.subjects]
-        downloader.get_files(subject_codes)
-        downloader.get_quizzes(subject_codes)
-        self.classify()
-
     def classify(self):
         for subject in self.subjects:
             if os.path.exists(f"Subjects/{subject.ASU_course_code}"):
                 if os.path.exists(f"Subjects/{subject.ASU_course_code}/ass"):
                     mypath = f"Subjects/{subject.ASU_course_code}/ass"
-                    onlyfiles = [join(mypath, f) for f in listdir(mypath) if isfile(join(mypath, f))]
-                    print(onlyfiles)
+                    onlyfiles = [f"{mypath}/{f}" for f in listdir(mypath) if isfile(join(mypath, f))]
+                    onlyfiles.append(f"Subjects/{subject.ASU_course_code}/My Header.docx")
+                    converter.convert_to_pdf(onlyfiles)
+                    onlyfiles = [f"{mypath}/{f}" for f in listdir(mypath) if isfile(join(mypath, f))]
                     subject.assignments.file_paths = onlyfiles
 
-                if os.path.exists(f"Subjects/{subject.ASU_course_code}/labs"):
-                    mypath = f"Subjects/{subject.ASU_course_code}/labs"
-                    onlyfiles = [f for f in listdir(mypath) if isfile(join(mypath, f))]
+                if os.path.exists(f"Subjects/{subject.ASU_course_code}/lab"):
+                    mypath = f"Subjects/{subject.ASU_course_code}/lab"
+                    onlyfiles = [f"{mypath}/{f}" for f in listdir(mypath) if isfile(join(mypath, f))]
                     print(onlyfiles)
+                    converter.convert_to_pdf(onlyfiles)
+                    onlyfiles = [f"{mypath}/{f}" for f in listdir(mypath) if isfile(join(mypath, f))]
                     subject.labs.file_paths = onlyfiles
 
                 if os.path.exists(f"Subjects/{subject.ASU_course_code}/project"):
                     mypath = f"Subjects/{subject.ASU_course_code}/project"
-                    onlyfiles = [join(mypath, f) for f in listdir(mypath) if isfile(join(mypath, f))]
-                    print(onlyfiles)
+                    onlyfiles = [f"{mypath}/{f}" for f in listdir(mypath) if isfile(join(mypath, f))]
+                    converter.convert_to_pdf(onlyfiles)
+                    onlyfiles = [f"{mypath}/{f}" for f in listdir(mypath) if isfile(join(mypath, f))]
                     subject.project.file_paths = onlyfiles
 
                 if os.path.exists(f"Subjects/{subject.ASU_course_code}/quizzes"):
                     mypath = f"Subjects/{subject.ASU_course_code}/quizzes"
-                    onlyfiles = [join(mypath, f) for f in listdir(mypath) if isfile(join(mypath, f))]
+                    onlyfiles = [f"{mypath}/{f}" for f in listdir(mypath) if isfile(join(mypath, f))]
+                    converter.convert_to_pdf(onlyfiles)
+                    onlyfiles = [f"{mypath}/{f}" for f in listdir(mypath) if isfile(join(mypath, f))]
                     subject.quizzes.file_paths = onlyfiles
 
+                if os.path.exists(f"Subjects/{subject.ASU_course_code}/midterm"):
+                    mypath = f"Subjects/{subject.ASU_course_code}/midterm"
+                    onlyfiles = [f"{mypath}/{f}" for f in listdir(mypath) if isfile(join(mypath, f))]
+                    converter.convert_to_pdf(onlyfiles)
+                    onlyfiles = [f"{mypath}/{f}" for f in listdir(mypath) if isfile(join(mypath, f))]
+                    subject.midterms.file_paths = onlyfiles
 
-app = Application()
+    def merger_interface(self):
+        pdfs_to_merge = []
+        for subject in self.subjects:
+            pdfs_to_merge.append(f"Subjects/{subject.ASU_course_code}/My Header.pdf")
+            pdfs_to_merge.append(subject.assignments.file_paths)
+            pdfs_to_merge.append(subject.quizzes.file_paths)
+            pdfs_to_merge.append(subject.midterm.file_paths)
+            pdfs_to_merge.append(subject.labs.file_paths)
+            pdfs_to_merge.append(subject.project.file_paths)
+            merge.merge_pdfs(pdfs_to_merge, f"Subjects/{subject.ASU_course_code}")
+            pdfs_to_merge = []
+        tkinter.messagebox.showinfo("Success", "Portfolios Generated Successfully")

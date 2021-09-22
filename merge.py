@@ -3,6 +3,8 @@ import os
 
 
 def merge_pdfs(files, path):
+    if not bool(files):
+        return
     # Create a new PdfFileWriter object which represents a blank PDF document
     pdf_writer = PyPDF2.PdfFileWriter()
     # Open the files that have to be merged one by one
@@ -20,11 +22,11 @@ def merge_pdfs(files, path):
         # Now that you have copied all the pages in both the documents, write them into the a new document
         pdf_output_file = open(path + ' My Portfolio.pdf', 'wb')
         pdf_writer.write(pdf_output_file)
-
+        pdf_output_file.name.replace(path, "")
         # Close all the files - Created as well as opened
         pdf_file.close()
         pdf_output_file.close()
 
 
-merge_pdfs(['Autofill/AutofillResults/My Assignment1.pdf', 'Autofill/AutofillResults/My Assignment2.pdf'],
-           'Autofill/AutofillResults')
+# merge_pdfs(['Autofill/AutofillResults/My Assignment1.pdf', 'Autofill/AutofillResults/My Assignment2.pdf'],
+#            'Autofill/AutofillResults')

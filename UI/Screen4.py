@@ -196,6 +196,8 @@ class Screen4(Frame):
             width=208,
             height=53)
 
+        self.b10.bind("<Button-1>", func=lambda e: self.window.merger_interface)
+
         self.img11 = PhotoImage (file=f"resources/images/screen4/img11.png")
         self.img11_hover = PhotoImage (file=f"resources/images/screen4/img10_hover.png")
         self.b11 = Label (
