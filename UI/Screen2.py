@@ -1,9 +1,8 @@
-import os
 import tkinter.messagebox
 from tkinter import *
 
-import InfoContainers
-import InfoContainers as IC
+from modifiers import InfoContainers as IC
+
 
 class Screen2(Frame):
     def __init__(self, win):

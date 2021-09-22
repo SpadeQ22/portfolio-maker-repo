@@ -1,4 +1,4 @@
-from user_interface import Application
+from UI.user_interface import Application
 """
 to complile ui files: pyuic5 -x test.ui -o Downloader.py
 to complile qrc files: pyrcc5 resource.qrc -o resource_rc.py

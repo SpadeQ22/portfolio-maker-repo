@@ -4,8 +4,8 @@ import os
 from docxtpl import DocxTemplate, InlineImage
 from docx.shared import Cm
 
-import converter
-from InfoContainers import Assignment, Quiz, Lab, Project, Header, Midterm
+from modifiers import converter
+from modifiers.InfoContainers import Header
 
 
 class Filler:
@@ -113,7 +113,7 @@ class Filler:
                      + str(kwargs["num"]) + ".docx")
 
             converter.convert_to_pdf([f"Subjects/{subject.ASU_course_code}/ass/AssignmentCover"
-                     + str(kwargs["num"]) + ".docx"])
+                                      + str(kwargs["num"]) + ".docx"])
 
         elif kwargs["template_name"] == 'Autofill/Templates and pictures/Quiz Template.docx':
 
@@ -124,7 +124,7 @@ class Filler:
                      + str(kwargs["num"]) + ".docx")
 
             converter.convert_to_pdf([f"Subjects/{subject.ASU_course_code}/quizzes/QuizCover"
-                     + str(kwargs["num"]) + ".docx"])
+                                      + str(kwargs["num"]) + ".docx"])
 
         elif kwargs["template_name"] == 'Autofill/Templates and pictures/Lab Template.docx':
 
@@ -135,7 +135,7 @@ class Filler:
                      + str(kwargs["num"]) + ".docx")
 
             converter.convert_to_pdf([f"Subjects/{subject.ASU_course_code}/lab/LabCover"
-                     + str(kwargs["num"]) + ".docx"])
+                                      + str(kwargs["num"]) + ".docx"])
 
         elif kwargs["template_name"] == 'Autofill/Templates and pictures/Project Template.docx':
 
@@ -146,7 +146,7 @@ class Filler:
                      + str(kwargs["num"]) + ".docx")
 
             converter.convert_to_pdf([f"Subjects/{subject.ASU_course_code}/project/ProjectCover"
-                     + str(kwargs["num"]) + ".docx"])
+                                      + str(kwargs["num"]) + ".docx"])
 
         elif kwargs["template_name"] == 'Autofill/Templates and pictures/Midterm Template.docx':
 
@@ -156,7 +156,7 @@ class Filler:
             doc.save(f"Subjects/{subject.ASU_course_code}/midterm/MidtermCover"
                      + str(kwargs["num"]) + ".docx")
             converter.convert_to_pdf([f"Subjects/{subject.ASU_course_code}/midterm/MidtermCover"
-                     + str(kwargs["num"]) + ".docx"])
+                                      + str(kwargs["num"]) + ".docx"])
 
 
 def createSubjectSliceMidterm(student, subject):

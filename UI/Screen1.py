@@ -2,7 +2,7 @@ import os
 import tkinter.messagebox
 from tkinter import *
 from UI.Screen2 import Screen2
-import InfoContainers as IC
+from modifiers import InfoContainers as IC
 from tkinter import filedialog
 
 class Screen1(Frame):

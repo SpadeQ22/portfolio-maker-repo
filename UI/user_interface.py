@@ -7,14 +7,7 @@ from os import listdir
 from os.path import isfile, join
 from tkinter import ttk
 
-import requests.exceptions
-
-import Autofill
-
-import InfoContainers
-import UI.Screen2
-import converter
-import merge
+from modifiers import merge, converter
 from Autofill.filler import createSubjectFiller
 from UI.Screen1 import Screen1
 from UI.Screen2 import Screen2
