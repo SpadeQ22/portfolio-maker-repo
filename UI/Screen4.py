@@ -278,6 +278,7 @@ class Screen4(Frame):
         self.initialize_new_subject()
 
     def initialize_new_subject(self):
+        self.entry0.delete(0, END)
         self.entry0.insert(0, self.window.current_subject.ASU_course_code)
         self.initialize_new_section(self.window.current_subject.assignments)
 
@@ -479,16 +480,21 @@ class Screen4(Frame):
     def add_option(self, subject):
         option = Label(
             image=self.img7,
-            borderwidth=0,
-            highlightthickness=0,
+            borderwidth=1,
+            highlightthickness=1,
             text=subject.ASU_course_code,
             compound=CENTER,
             relief="flat",
             width=220,
             height=60)
         option.bind("<Button-1>", lambda e: self.set_current_subject(subject))
+        option.bind("<Enter>", func=lambda e: option.configure(
+            bg="#93B5C6"))
+        option.bind("<Leave>", func=lambda e: option.configure(
+            bg="white"))
         self.options.append(option)
 
     def set_current_subject(self, subject):
         self.window.current_subject = subject
         self.initialize_new_subject()
+        self.dropdown()

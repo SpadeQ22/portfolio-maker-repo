@@ -106,8 +106,8 @@ class Filler:
 
         elif kwargs["template_name"] == 'Autofill/Templates and pictures/Assignment Template.docx':
 
-            # os.makedirs(os.path.dirname(f"Subjects/{subject.ASU_course_code}/ass/AssignmentCover"
-            #          +str(kwargs["num"]) + ".docx"), exist_ok=True)
+            os.makedirs(os.path.dirname(f"Subjects/{subject.ASU_course_code}/ass/AssignmentCover"
+                     +str(kwargs["num"]) + ".docx"), exist_ok=True)
 
             doc.save(f"Subjects/{subject.ASU_course_code}/ass/AssignmentCover"
                      + str(kwargs["num"]) + ".docx")
@@ -117,8 +117,8 @@ class Filler:
 
         elif kwargs["template_name"] == 'Autofill/Templates and pictures/Quiz Template.docx':
 
-            # os.makedirs(os.path.dirname(f"Subjects/{subject.ASU_course_code}/quizzes/QuizCover"
-            #          + str(kwargs["num"]) + ".docx"), exist_ok=True)
+            os.makedirs(os.path.dirname(f"Subjects/{subject.ASU_course_code}/quizzes/QuizCover"
+                     + str(kwargs["num"]) + ".docx"), exist_ok=True)
 
             doc.save(f"Subjects/{subject.ASU_course_code}/quizzes/QuizCover"
                      + str(kwargs["num"]) + ".docx")
@@ -128,8 +128,8 @@ class Filler:
 
         elif kwargs["template_name"] == 'Autofill/Templates and pictures/Lab Template.docx':
 
-            # os.makedirs(os.path.dirname(f"Subjects/{subject.ASU_course_code}/lab/LabCover"
-            #          + str(kwargs["num"]) + ".docx"), exist_ok=True)
+            os.makedirs(os.path.dirname(f"Subjects/{subject.ASU_course_code}/lab/LabCover"
+                     + str(kwargs["num"]) + ".docx"), exist_ok=True)
 
             doc.save(f"Subjects/{subject.ASU_course_code}/lab/LabCover"
                      + str(kwargs["num"]) + ".docx")
@@ -139,8 +139,8 @@ class Filler:
 
         elif kwargs["template_name"] == 'Autofill/Templates and pictures/Project Template.docx':
 
-            # os.makedirs(os.path.dirname(f"Subjects/{subject.ASU_course_code}/project/ProjectCover"
-            #          + str(kwargs["num"]) + ".docx"), exist_ok=True)
+            os.makedirs(os.path.dirname(f"Subjects/{subject.ASU_course_code}/project/ProjectCover"
+                     + str(kwargs["num"]) + ".docx"), exist_ok=True)
 
             doc.save(f"Subjects/{subject.ASU_course_code}/project/ProjectCover"
                      + str(kwargs["num"]) + ".docx")
@@ -168,18 +168,19 @@ def createSubjectSliceMidterm(student, subject):
     :param subject: takes subject object to pass its parameter to infoToReplace method
     :return: the results of infoToReplace
     """
-    midterm_fill = Filler(grade=subject.midterms.grade, total=subject.midterms.total)
+    if bool(subject.midterms.file_paths):
+        midterm_fill = Filler(grade=subject.midterms.grade, total=subject.midterms.total)
 
-    midterm_fill.infoToReplace(subject=subject, template_name='Autofill/Templates and pictures/Midterm Template.docx',
-                               name=student.name, picture=student.picture_name,
-                               program_name=student.program_name, academic_year=student.academic_year,
-                               ID=student.ID, UEL_ID=student.UEL_ID, ASU_course_code=subject.ASU_course_code,
-                               UEL_module_code=subject.UEL_module_code, ASU_course_name=subject.ASU_course_name,
-                               UEL_module_name=subject.UEL_module_name, semester=subject.semester,
-                               grade=subject.midterms.grade,
-                               instructor_signature=subject.instructor_signature,
-                               assistant_signature=subject.assistant_signature, num=1)
-    subject.midterms.file_paths.insert(0, f"Subjects/{subject.ASU_course_code}/midterm/MidtermCover1.pdf")
+        midterm_fill.infoToReplace(subject=subject, template_name='Autofill/Templates and pictures/Midterm Template.docx',
+                                   name=student.name, picture=student.picture_name,
+                                   program_name=student.program_name, academic_year=student.academic_year,
+                                   ID=student.ID, UEL_ID=student.UEL_ID, ASU_course_code=subject.ASU_course_code,
+                                   UEL_module_code=subject.UEL_module_code, ASU_course_name=subject.ASU_course_name,
+                                   UEL_module_name=subject.UEL_module_name, semester=subject.semester,
+                                   grade=subject.midterms.grade,
+                                   instructor_signature=subject.instructor_signature,
+                                   assistant_signature=subject.assistant_signature, num=1)
+        subject.midterms.file_paths.insert(0, f"Subjects/{subject.ASU_course_code}/midterm/MidtermCover1.pdf")
 
 
 def createSubjectSliceAssignments(student, subject):
@@ -221,19 +222,20 @@ def createSubjectSliceLabs(student, subject):
 
 
 def createSubjectSliceProject(student, subject):
-    project_fill = Filler(grade=subject.project.grade, total=subject.project.total, num=1)
+    if bool(subject.project.file_paths):
+        project_fill = Filler(grade=subject.project.grade, total=subject.project.total, num=1)
 
-    project_fill.infoToReplace(subject=subject, template_name='Autofill/Templates and pictures/Project Template.docx',
-                               name=student.name, picture=student.picture_name,
-                               program_name=student.program_name, academic_year=student.academic_year,
-                               ID=student.ID, UEL_ID=student.UEL_ID, ASU_course_code=subject.ASU_course_code,
-                               UEL_module_code=subject.UEL_module_code, ASU_course_name=subject.ASU_course_name,
-                               UEL_module_name=subject.UEL_module_name, semester=subject.semester,
-                               grade=subject.project.grade,
-                               instructor_signature=subject.instructor_signature,
-                               assistant_signature=subject.assistant_signature,
-                               num=1)
-    subject.project.file_paths.insert(0, f"Subjects/{subject.ASU_course_code}/project/ProjectCover1.pdf")
+        project_fill.infoToReplace(subject=subject, template_name='Autofill/Templates and pictures/Project Template.docx',
+                                   name=student.name, picture=student.picture_name,
+                                   program_name=student.program_name, academic_year=student.academic_year,
+                                   ID=student.ID, UEL_ID=student.UEL_ID, ASU_course_code=subject.ASU_course_code,
+                                   UEL_module_code=subject.UEL_module_code, ASU_course_name=subject.ASU_course_name,
+                                   UEL_module_name=subject.UEL_module_name, semester=subject.semester,
+                                   grade=subject.project.grade,
+                                   instructor_signature=subject.instructor_signature,
+                                   assistant_signature=subject.assistant_signature,
+                                   num=1)
+        subject.project.file_paths.insert(0, f"Subjects/{subject.ASU_course_code}/project/ProjectCover1.pdf")
 
 
 def createSubjectSliceQuizzes(student, subject):
