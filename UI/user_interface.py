@@ -13,7 +13,6 @@ from UI.Screen1 import Screen1
 from UI.Screen2 import Screen2
 from UI.Screen3 import Screen3
 from UI.Screen4 import Screen4
-# from UI.test import Screen4
 from Downloader.Downloader import Downloader
 
 
@@ -28,10 +27,10 @@ class Application(tk.Tk):
         self.geometry("1440x1024")
         self.configure(bg="#83568a")
         self.currentScreen = None
+
+
         self.change_to_screen(Screen1)
-        self.overrideredirect(False)
-        # super().bind("<Button-1>", self.clickwin)
-        # super().bind("<B1-Motion>", self.dragwin)
+
         self.resizable(False, False)
         self.mainloop()
 
@@ -40,6 +39,7 @@ class Application(tk.Tk):
         screen.pack(fill="both", expand=True)
         if self.currentScreen is not None:
             self.currentScreen.forget()
+        # self.main_canvas.create_window((0,0), window=screen, anchor="nw")
         self.currentScreen = screen
 
     def change_to_screen2(self):

@@ -3,11 +3,13 @@ import tkinter.messagebox
 from tkinter import *
 from UI.Screen2 import Screen2
 from modifiers import InfoContainers as IC
-from tkinter import filedialog
+from tkinter import filedialog, ttk
+
 
 class Screen1(Frame):
 
     def __init__(self, window):
+
         Frame.__init__(self, window)
         self.win = window
         self.configure(bg="#83568a")
@@ -20,6 +22,11 @@ class Screen1(Frame):
             highlightthickness=0,
             relief="ridge")
         self.canvas.place(x=0, y=0)
+
+        self.vbar = ttk.Scrollbar(self, orient=VERTICAL, command=self.canvas.yview)
+        self.vbar.pack(side=RIGHT, fill=Y)
+        self.canvas.configure(yscrollcommand=self.vbar.set)
+        self.canvas.bind("<Configure>", lambda e: self.canvas.configure(scrollregion=self.canvas.bbox("all")))
 
         self.background_img = PhotoImage(file=f"resources/images/screen1/background.png")
         self.background = self.canvas.create_image(

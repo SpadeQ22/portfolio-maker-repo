@@ -1,5 +1,6 @@
 import tkinter.messagebox
 from tkinter import *
+from tkinter import ttk
 
 from modifiers import InfoContainers as IC
 
@@ -19,6 +20,11 @@ class Screen2(Frame):
             highlightthickness=0,
             relief="ridge")
         self.canvas.place(x=0, y=0)
+
+        self.vbar = ttk.Scrollbar(self, orient=VERTICAL, command=self.canvas.yview)
+        self.vbar.pack(side=RIGHT, fill=Y)
+        self.canvas.configure(yscrollcommand=self.vbar.set)
+        self.canvas.bind("<Configure>", lambda e: self.canvas.configure(scrollregion=self.canvas.bbox("all")))
 
         self.entry0_img = PhotoImage(file=f"resources/images/screen2/img_textBox0.png")
         self.entry0_bg = self.canvas.create_image(

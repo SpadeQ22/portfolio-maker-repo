@@ -46,6 +46,11 @@ class Screen4(Frame):
             relief="ridge")
         self.canvas.place(x=0, y=0)
 
+        self.vbar = ttk.Scrollbar(self, orient=VERTICAL, command=self.canvas.yview)
+        self.vbar.pack(side=RIGHT, fill=Y)
+        self.canvas.configure(yscrollcommand=self.vbar.set)
+        self.canvas.bind("<Configure>", lambda e: self.canvas.configure(scrollregion=self.canvas.bbox("all")))
+
         self.background_img = PhotoImage(file=f"resources/images/screen4/background.png")
         self.background = self.canvas.create_image(
             177.0, 86.0,

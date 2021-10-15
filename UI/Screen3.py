@@ -2,6 +2,8 @@ import os
 import threading
 from tkinter import *
 import tkinter.font as tkFont
+from tkinter import ttk
+
 from UI.Screen2 import Screen2
 from UI.Screen4 import Screen4
 from Autofill.filler import createSubjectFiller
@@ -29,6 +31,11 @@ class Screen3(Frame):
             highlightthickness=0,
             relief="ridge")
         self.canvas.place(x=0, y=0)
+
+        self.vbar = ttk.Scrollbar(self, orient=VERTICAL, command=self.canvas.yview)
+        self.vbar.pack(side=RIGHT, fill=Y)
+        self.canvas.configure(yscrollcommand=self.vbar.set)
+        self.canvas.bind("<Configure>", lambda e: self.canvas.configure(scrollregion=self.canvas.bbox("all")))
 
         self.background_img = PhotoImage(file=f"resources/images/screen3/background.png")
         self.background = self.canvas.create_image(
