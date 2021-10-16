@@ -1,5 +1,6 @@
 import os
 import threading
+import webbrowser
 from tkinter import *
 import tkinter.font as tkFont
 from tkinter import ttk
@@ -39,7 +40,7 @@ class Screen3(Frame):
 
         self.background_img = PhotoImage(file=f"resources/images/screen3/background.png")
         self.background = self.canvas.create_image(
-            234.0, 141.5,
+            689.5, 141.5,
             image=self.background_img)
 
         for subject in self.win.subjects:
@@ -61,8 +62,48 @@ class Screen3(Frame):
         self.b3.bind("<Button-1>", lambda e: self.btn_clicked())
         self.changeOnHover(self.b3, self.img3_hover, self.img3)
 
+        self.img14 = PhotoImage(file=f"resources/images/screen4/img14.png")
+        self.img14_hover = PhotoImage(file=f"resources/images/screen4/img14_hover.png")
+        self.b14 = Label(
+            image=self.img14,
+            bg="#83568a",
+            borderwidth=0,
+            highlightthickness=0,
+            relief="flat")
+
+        self.b14.place(
+            x=1279, y=24,
+            width=50,
+            height=50)
+        self.b14.bind("<Button-1>", lambda e: self.openurl("https://github.com/SpadeQ22/portfolio-maker-repo/"))
+
+        self.img15 = PhotoImage(file=f"resources/images/screen4/img15.png")
+        self.img15_hover = PhotoImage(file=f"resources/images/screen4/img15_hover.png")
+        self.b15 = Label(
+            image=self.img15,
+            bg="#83568a",
+            borderwidth=0,
+            highlightthickness=0,
+            relief="flat")
+
+        self.b15.place(
+            x=1139, y=36,
+            width=100,
+            height=25)
+
+        self.b15.bind("<Button-1>", lambda e: self.openurl("https://www.linkedin.com/in/omaco2211/"))
+
+        self.changeOnHover(self.b14, self.img14_hover, self.img14)
+        self.changeOnHover(self.b15, self.img15_hover, self.img15)
+
+    def openurl(self, url):
+        webbrowser.open_new(url)
+
     def btn_clicked(self):
-        self.win.download_splash()
+        t1 = threading.Thread(target=self.win.download_splash)
+        t1.start()
+
+
 
     def return_to_edit(self, subject):
         self.win.current_subject = subject
