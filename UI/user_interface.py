@@ -91,7 +91,6 @@ class Application(tk.Tk):
             self.classify()
             loading_win.progress['value'] = 100
             loading_win.destroy()
-            threading.Thread(target=lambda: self.change_to_screen(Screen4)).start()
 
         except Exception as err:
             loading_win.destroy()

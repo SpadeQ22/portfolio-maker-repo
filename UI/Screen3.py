@@ -4,6 +4,7 @@ import webbrowser
 from tkinter import *
 import tkinter.font as tkFont
 from tkinter import ttk
+from modifiers.threader import BaseThread
 
 from UI.Screen2 import Screen2
 from UI.Screen4 import Screen4
@@ -100,7 +101,7 @@ class Screen3(Frame):
         webbrowser.open_new(url)
 
     def btn_clicked(self):
-        t1 = threading.Thread(target=self.win.download_splash)
+        t1 = BaseThread(target=self.win.download_splash, callback=self.win.change_to_screen, callback_args=Screen4)
         t1.start()
 
 
