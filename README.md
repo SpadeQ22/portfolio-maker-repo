@@ -9,9 +9,9 @@
 - 🥅 2020 Goals: Contribute more to Open Source projects
 
 I developed this software to fix the hard time students have, just to make their Portfolio for each subject
-including all (assignments, quizzes, etc...). And came up with the portfolio-maker software which take care of you 
+including all (assignments, quizzes, etc...). And came up with the portfolio-maker software; which takes care of you 
 and does everything from downloading your files automatically from the LMS to creating your full portfolio with your 
-templates and documents all filled and ready to deliver with just few clicks !
+templates and documents all filled and ready to deliver with just a few clicks !
 ### Connect with me:
 
 [<img align="left" alt="codeSTACKr | LinkedIn" width="22px" src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/linkedin.svg" />][linkedin_omar]
