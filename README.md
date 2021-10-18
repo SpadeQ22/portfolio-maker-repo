@@ -33,37 +33,28 @@ templates and documents all filled and ready to deliver with just few clicks !
 ### 📕 Portfolio Maker guide 😃
 
 <!-- BLOG-POST-LIST:START -->
-- **Step 1**: open your application and wait for this window ![img_1.png](img_1.png)[<img align="left" alt="GitHub" src="D:\GitHub\portfolio-maker\img.png" />]
+- **Step 1**: open your application and wait for this window ![img_1.png](img_1.png)
 - **Step 2**: Fill all the fields with your correct information...
  <br /> **Note: Incorrect username or password will result in errors while trying to connect 
  to the LMS so make sure to right the correct info! Don't worry if you filled anything else wrong you could always edit your portfolio after you have finished.**
 - **Step 3**: Now here as shown below you will be asked to enter all the information regarding your first subject 
  and after finishing click either add another subject or done to go the following step ![img_2.png](img_2.png)
-- **Step 4**: ![img.png](img.png)
+- **Step 4**: Now you can view and review your subjects by clicking on them and edit information if needed...and after you have finished click done to for the final steps![img.png](img.png)
+- **Step 5**: After pressing done at **Step 4** a window will contain:
+<br /> - a list with all subjects in the top left corner
+<br /> - all assignments, quizzes, labs, midterm and project
+<br /> - the ability to switch, remove or add external files 
+<br /> **Note: Don't worry you could always edit your portfolio at the end after downloading it, but make sure you put
+all your documents in order (ex. Assignment 1 should be shown at the left and then Assignment 2..., if not
+just switch them using the switch button in the top)**
+![img_3.png](img_3.png)
+- **Step 6**: Now press Done, and you'll have your portfolio generated! 
 <!-- BLOG-POST-LIST:END -->
 
 ---
-
-<details>
-  <summary>:zap: Recent GitHub Activity</summary>
-  
-<!--START_SECTION:activity-->
-1. 🗣 Commented on [#2](https://github.com/codeSTACKr/portfolio-sass/issues/2) in [codeSTACKr/portfolio-sass](https://github.com/codeSTACKr/portfolio-sass)
-2. ❗️ Closed issue [#2](https://github.com/codeSTACKr/portfolio-sass/issues/2) in [codeSTACKr/portfolio-sass](https://github.com/codeSTACKr/portfolio-sass)
-3. ❌ Closed PR [#11](https://github.com/codeSTACKr/free-developer-resources/pull/11) in [codeSTACKr/free-developer-resources](https://github.com/codeSTACKr/free-developer-resources)
-4. 🗣 Commented on [#11](https://github.com/codeSTACKr/free-developer-resources/issues/11) in [codeSTACKr/free-developer-resources](https://github.com/codeSTACKr/free-developer-resources)
-5. 🎉 Merged PR [#10](https://github.com/codeSTACKr/free-developer-resources/pull/10) in [codeSTACKr/free-developer-resources](https://github.com/codeSTACKr/free-developer-resources)
-<!--END_SECTION:activity-->
-
-</details>
-
-<details>
-  <summary>:zap: GitHub Stats</summary>
-
-  <img align="left" alt="codeSTACKr's GitHub Stats" src="https://github-readme-stats.codestackr.vercel.app/api?username=codeSTACKr&show_icons=true&hide_border=true" />
-
-</details>
-
+Feel free to contact us whenever you find any difficulties running the app or any problems occurring,
+And don't forget to give us feedback as it is essential to improve our software!
+---
 [instagram_omar]: https://instagram.com/codeSTACKr
 [instagram_hussein]: https://www.instagram.com/husseinaselim/
 [linkedin_omar]: https://www.linkedin.com/in/omaco2211/
