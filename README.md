@@ -33,7 +33,7 @@ templates and documents all filled and ready to deliver with just few clicks !
 ### 📕 Portfolio Maker guide 😃
 
 <!-- BLOG-POST-LIST:START -->
-- **Step 1**: open your application and wait for this window ![img_1.png](D:\GitHub\portfolio-maker\readmeimages\img_1.png)
+- **Step 1**: open your application and wait for this window ![img_1.png](\readmeimages\img_1.png)(https://github.com/SpadeQ22/portfolio-maker-repo/blob/master/readmeimages/img_1.png?raw=true)
 - **Step 2**: Fill all the fields with your correct information...
  <br /> **Note: Incorrect username or password will result in errors while trying to connect 
  to the LMS so make sure to right the correct info! Don't worry if you filled anything else wrong you could always edit your portfolio after you have finished.**
