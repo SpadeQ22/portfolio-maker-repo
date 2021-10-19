@@ -34,10 +34,6 @@ class Screen3(Frame):
             relief="ridge")
         self.canvas.place(x=0, y=0)
 
-        self.vbar = ttk.Scrollbar(self, orient=VERTICAL, command=self.canvas.yview)
-        self.vbar.pack(side=RIGHT, fill=Y)
-        self.canvas.configure(yscrollcommand=self.vbar.set)
-        self.canvas.bind("<Configure>", lambda e: self.canvas.configure(scrollregion=self.canvas.bbox("all")))
 
         self.background_img = PhotoImage(file=f"resources/images/screen3/background.png")
         self.background = self.canvas.create_image(
@@ -101,7 +97,7 @@ class Screen3(Frame):
         webbrowser.open_new(url)
 
     def btn_clicked(self):
-        t1 = BaseThread(target=self.win.download_splash, callback=self.win.change_to_screen, callback_args=Screen4)
+        t1 = BaseThread(target=self.win.download_splash, callback=self.win.change_to_screen4, callback_args=1)
         t1.start()
 
 
