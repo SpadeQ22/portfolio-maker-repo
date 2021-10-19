@@ -33,14 +33,15 @@ templates and documents all filled and ready to deliver with just a few clicks !
 ### 📕 Portfolio Maker guide 😃
 
 <!-- BLOG-POST-LIST:START -->
-- **Step 1**: open your application and wait for this window [img_1.png](https://github.com/SpadeQ22/portfolio-maker-repo/blob/master/imagesforreadme/img_1.png)
-- **Step 2**: Fill all the fields with your correct information...
+- **Step 1**: make sure that your display scale settings is at most at 100% any more than that will clitter the gui. go to settings -> display -> scale and resolution -> change the scale to 100%
+- **Step 2**: open your application and wait for this window [img_1.png](https://github.com/SpadeQ22/portfolio-maker-repo/blob/master/imagesforreadme/img_1.png)
+- **Step 3**: Fill all the fields with your correct information...
  <br /> **Note: Incorrect username or password will result in errors while trying to connect 
  to the LMS so make sure to right the correct info! Don't worry if you filled anything else wrong you could always edit your portfolio after you have finished.**
-- **Step 3**: Now here as shown below you will be asked to enter all the information regarding your first subject 
+- **Step 4**: Now here as shown below you will be asked to enter all the information regarding your first subject 
  and after finishing click either add another subject or done to go the following step [img_2.png](https://github.com/SpadeQ22/portfolio-maker-repo/blob/master/imagesforreadme/img_2.png)
-- **Step 4**: Now you can view and review your subjects by clicking on them and edit information if needed...and after you have finished click done to for the final steps [img.png](https://github.com/SpadeQ22/portfolio-maker-repo/blob/master/imagesforreadme/img.png)
-- **Step 5**: After pressing done at **Step 4** a window will contain:
+- **Step 5**: Now you can view and review your subjects by clicking on them and edit information if needed...and after you have finished click done to for the final steps [img.png](https://github.com/SpadeQ22/portfolio-maker-repo/blob/master/imagesforreadme/img.png)
+- **Step 6**: After pressing done at **Step 4** a window will contain:
 <br /> - a list with all subjects in the top left corner
 <br /> - all assignments, quizzes, labs, midterm and project
 <br /> - the ability to switch, remove or add external files 
@@ -55,7 +56,7 @@ just switch them using the switch button in the top)**
 Feel free to contact us whenever you find any difficulties running the app or any problems occurring,
 And don't forget to give us feedback as it is essential to improve our software!
 ---
-[instagram_omar]: https://instagram.com/codeSTACKr
+[instagram_omar]: https://instagram.com/omar_2011/
 [instagram_hussein]: https://www.instagram.com/husseinaselim/
 [linkedin_omar]: https://www.linkedin.com/in/omaco2211/
 [linkedin_hussein]: https://www.linkedin.com/in/hussein-selim-6190521a0/
