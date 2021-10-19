@@ -56,7 +56,7 @@ just switch them using the switch button in the top)**
 Feel free to contact us whenever you find any difficulties running the app or any problems occurring,
 And don't forget to give us feedback as it is essential to improve our software!
 ---
-[instagram_omar]: https://instagram.com/omar_2011/
+[instagram_omar]: https://instagram.com/omar_ashraf2011/
 [instagram_hussein]: https://www.instagram.com/husseinaselim/
 [linkedin_omar]: https://www.linkedin.com/in/omaco2211/
 [linkedin_hussein]: https://www.linkedin.com/in/hussein-selim-6190521a0/
