@@ -35,12 +35,19 @@ class Application(tk.Tk):
         self.resizable(False, False)
         self.mainloop()
 
-    def change_to_screen(self, Screen):
-        screen = Screen(self)
+    # def change_to_screen(self, Screen):
+    #     screen = Screen(self)
+    #     screen.pack(fill="both", expand=True)
+    #     if self.currentScreen is not None:
+    #         self.currentScreen.forget()
+    #     # self.main_canvas.create_window((0,0), window=screen, anchor="nw")
+    #     self.currentScreen = screen
+
+    def change_to_screen4(self,n):
+        screen = Screen4(self)
         screen.pack(fill="both", expand=True)
         if self.currentScreen is not None:
             self.currentScreen.forget()
-        # self.main_canvas.create_window((0,0), window=screen, anchor="nw")
         self.currentScreen = screen
 
     def change_to_screen2(self):
