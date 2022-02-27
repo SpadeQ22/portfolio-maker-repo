@@ -3,7 +3,7 @@
 
 ## We are currently Engineering Students at Ain Shams University in Egypt!!
 
-- 🔭 I can work with all languages (python, c++, c, java, etc...)
+- 🔭 I can code in python, c++, c, java, javascript.
 - 🌱 I’m currently learning machine learning 
 - 👯 I’m looking to collaborate with other software developers
 - 🥅 2020 Goals: Contribute more to Open Source projects
