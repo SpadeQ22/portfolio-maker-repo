@@ -5,7 +5,7 @@ from docxtpl import DocxTemplate, InlineImage
 from docx.shared import Cm
 
 from modifiers import converter
-from modifiers.InfoContainers import Header
+from Model.InfoContainers import Header
 
 
 class Filler:

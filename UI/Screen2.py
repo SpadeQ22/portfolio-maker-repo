@@ -3,7 +3,7 @@ import webbrowser
 from tkinter import *
 from tkinter import ttk
 
-from modifiers import InfoContainers as IC
+from Model import InfoContainers as IC
 
 
 class Screen2(Frame):

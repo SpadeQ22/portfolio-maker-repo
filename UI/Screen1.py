@@ -3,7 +3,7 @@ import tkinter.messagebox
 import webbrowser
 from tkinter import *
 from UI.Screen2 import Screen2
-from modifiers import InfoContainers as IC
+from Model import InfoContainers as IC
 from tkinter import filedialog, ttk
 
 

@@ -21,16 +21,16 @@ class Downloader:
 
         self.auth_moodle(self.app_data)
         self.Param = {'sesskey': f'{self.session_key}',
-                 'info': 'core_course_get_enrolled_courses_by_timeline_classification'}
+                      'info': 'core_course_get_enrolled_courses_by_timeline_classification'}
 
         self.dict_pay = '[{"index":0,"methodname":"core_course_get_enrolled_courses_by_timeline_classification",' \
-                   '"args":{"offset":0,"limit":96,"classification":"all","sort":"fullname"}}]'
+                        '"args":{"offset":0,"limit":96,"classification":"all","sort":"fullname"}}]'
         self.re = self.session.get("https://lms.eng.asu.edu.eg/lib/ajax/service.php",
-                        data=self.dict_pay, params=self.Param)
+                                   data=self.dict_pay, params=self.Param)
 
         self.data = self.re.json()
-        self.subjects = {subject['fullname'].split()[0]: subject['viewurl'] for subject in self.data[0]['data']['courses']}
-
+        self.subjects = {subject['fullname'].split()[0]: subject['viewurl'] for subject in
+                         self.data[0]['data']['courses']}
 
     def auth_moodle(self, data: dict) -> requests.Session():
         try:
@@ -40,7 +40,8 @@ class Downloader:
             pattern_auth = '<input type="hidden" name="logintoken" value="\w{32}">'
             token = re.findall(pattern_auth, r_1.text)
             token = re.findall("\w{32}", token[0])[0]
-            payload = {'anchor': '', 'logintoken': token, 'username': login, 'password': password, 'rememberusername': 1}
+            payload = {'anchor': '', 'logintoken': token, 'username': login, 'password': password,
+                       'rememberusername': 1}
             r_2 = s.post(url=url_domain + "/login/index.php", data=payload)
             sessionStr = re.findall('"sesskey":"\w*', r_2.text)
             print(sessionStr)
@@ -60,7 +61,7 @@ class Downloader:
                 re = self.session.get(sub_link)
                 res = BeautifulSoup(re.content, 'html.parser')
                 re = res.select('.activity.assign.modtype_assign a')
-                assign_links = {atag.getText():atag.get("href") for atag in re}
+                assign_links = {atag.getText(): atag.get("href") for atag in re}
                 for key1, ass in assign_links.items():
                     re = self.session.get(ass)
                     res = BeautifulSoup(re.content, 'html.parser')
@@ -117,4 +118,3 @@ class Downloader:
             raise requests.exceptions.SSLError
         except requests.exceptions.ConnectionError:
             raise requests.exceptions.ConnectionError
-

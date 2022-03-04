@@ -10,6 +10,7 @@ from UI.Screen2 import Screen2
 from UI.Screen4 import Screen4
 from Autofill.filler import createSubjectFiller
 
+
 class Screen3(Frame):
     def __init__(self, window):
 
@@ -33,7 +34,6 @@ class Screen3(Frame):
             highlightthickness=0,
             relief="ridge")
         self.canvas.place(x=0, y=0)
-
 
         self.background_img = PhotoImage(file=f"resources/images/screen3/background.png")
         self.background = self.canvas.create_image(
@@ -99,8 +99,6 @@ class Screen3(Frame):
     def btn_clicked(self):
         t1 = BaseThread(target=self.win.download_splash, callback=self.win.change_to_screen4, callback_args=1)
         t1.start()
-
-
 
     def return_to_edit(self, subject):
         self.win.current_subject = subject
